@@ -1,23 +1,54 @@
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
+<table class="table">
+  <thead>
+    <tr>
+      <th class="col-md-3">Item</th>
+      <th class="col-md-3">Quantity</th>
+      <th class="col-md-3">Price</th>
+      <th class="col-md-3"></th>
+    </tr>  
+  </thead>
+  <tbody>
+    <tr ng-repeat="item in items">
+      <td>
+        {{ item.itemName }}
+      </td>
+      <td>
+        {{ item.quantity }}
+      </td>
+      <td>
+        {{ item.price }}
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger" ng-click="removeItem($index)">Remove</button>
+      </td>   
+    </tr>
+  </tbody>  
+</table>
+
+<div>
+  item: <input type="text" ng-model="itemName">
+  quantity: <input type="number" min="0" ng-model="quantity">
+  price: <input type="number" min="0" ng-model="price">
+  <button type="button" class="btn btn-default" ng-click="addItem()">Add</button>
 </div>
 
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
-
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
-
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
+<div class="row">
+  <div class= "col-md-4 col-md-offset-8">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td>Subtotal</td>
+          <td>{{ subtotal }}</td>
+        </tr>
+        <tr>
+          <td>Tax</td>
+          <td>{{ tax }}</td>
+        </tr>
+        <tr>
+          <td>Total</td>
+          <td>{{ total }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
