@@ -1,11 +1,10 @@
 <table class="table">
-  
-
   <thead>
     <tr>
-      <th>Item</th>
-      <th>Quantity</th>
-      <th>Price</th>
+      <th class="col-md-3">Item</th>
+      <th class="col-md-3">Quantity</th>
+      <th class="col-md-3">Price</th>
+      <th class="col-md-3"></th>
     </tr>  
   </thead>
   <tbody>
@@ -18,16 +17,17 @@
       </td>
       <td>
         {{ item.price }}
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger" ng-click="removeItem($index)">Remove</button>
       </td>   
     </tr>
   </tbody>  
 </table>
 
-
-
 <div>
   item: <input type="text" ng-model="itemName">
   quantity: <input type="number" min="0" ng-model="quantity">
   price: <input type="number" min="0" ng-model="price">
-  <button class="btn btn-default" ng-click="addItem()">Add</button>
+  <button type="button" class="btn btn-default" ng-click="addItem()">Add</button>
 </div>
