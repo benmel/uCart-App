@@ -21,7 +21,16 @@ angular.module('uCartAppApp')
 	        quantity: $scope.quantity,
 	        price: $scope.price
 	    };
+	    if (item.itemName && item.quantity>0 && item.price >0)
+	    {
 	    $scope.items.push(item);
+		}
+		else
+		{
+			window.alert('not valid');
+
+		}
+
 		};
 
 		$scope.removeItem = function(index){
