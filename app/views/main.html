@@ -23,8 +23,8 @@
 
 
 <div>
-  item: <input type="text" ng-model="item_name">
+  item: <input type="text" ng-model="item">
   quantity: <input type="number" min="0" ng-model="quantity">
   price: <input type="number" min="0" ng-model="price">
-  <button class="btn btn-default" type="submit">Button</button>
+  <button class="btn btn-default" ng-click="scanItem()">Button</button>
 </div>
