@@ -1,4 +1,6 @@
 <table class="table">
+  
+
   <thead>
     <tr>
       <th>Item</th>
@@ -7,24 +9,25 @@
     </tr>  
   </thead>
   <tbody>
-    <tr>
-      <td>Banana</td>
-      <td>4</td>
-      <td>2.50</td>
+    <tr ng-repeat="item in items">
+      <td>
+        {{ item.itemName }}
+      </td>
+      <td>
+        {{ item.quantity }}
+      </td>
+      <td>
+        {{ item.price }}
+      </td>   
     </tr>
-    <tr>
-      <td>Tomato</td>
-      <td>3</td>
-      <td>1.40</td>
-    </tr>  
   </tbody>  
 </table>
 
 
 
 <div>
-  item: <input type="text" ng-model="item">
+  item: <input type="text" ng-model="itemName">
   quantity: <input type="number" min="0" ng-model="quantity">
   price: <input type="number" min="0" ng-model="price">
-  <button class="btn btn-default" ng-click="scanItem()">Button</button>
+  <button class="btn btn-default" ng-click="addItem()">Add</button>
 </div>
