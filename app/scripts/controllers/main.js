@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name uCartAppApp.controller:MainCtrl
+ * @name uCartApp.controller:MainController
  * @description
- * # MainCtrl
- * Controller of the uCartAppApp
+ * # MainController
+ * Controller of the uCartApp
  */
-angular.module('uCartAppApp')
-  .controller('MainCtrl', function ($scope) {
+angular.module('uCartApp')
+  .controller('MainController', function ($scope) {
     $scope.items = [];
 
     $scope.itemName = '';
@@ -25,7 +25,7 @@ angular.module('uCartAppApp')
 	        quantity: $scope.quantity,
 	        price: $scope.price
 	    };
-	    if (item.itemName && item.quantity>0 && item.price >0) {
+	    if (item.itemName && item.quantity > 0 && item.price > 0) {
 	    	$scope.subtotal += (item.quantity * item.price);
 	    	$scope.tax = calculateTax($scope.subtotal);
 	    	$scope.total = $scope.subtotal + $scope.tax;
@@ -40,7 +40,7 @@ angular.module('uCartAppApp')
 
 		};
 
-		$scope.removeItem = function(index){
+		$scope.removeItem = function(index) {
 			var item = $scope.items[index];
 			$scope.subtotal -= (item.quantity * item.price);
 	    $scope.tax = calculateTax($scope.subtotal);
@@ -48,9 +48,9 @@ angular.module('uCartAppApp')
 			$scope.items.splice(index, 1);
 		};
   
-	var calculateTax = function(subtotal) {
-		return Math.round(subtotal * 0.0925 * 100) / 100;
-	};	
+		var calculateTax = function(subtotal) {
+			return Math.round(subtotal * 0.0925 * 100) / 100;
+		};	
 
   });
 
