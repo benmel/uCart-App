@@ -9,4 +9,5 @@
  */
 angular.module('uCartApp')
   .controller('FindProductController', function ($scope) {
+  	$scope.temp = false;
   });

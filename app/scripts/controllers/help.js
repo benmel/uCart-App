@@ -9,4 +9,5 @@
  */
 angular.module('uCartApp')
   .controller('HelpController', function ($scope) {
+  	$scope.temp = false;
   });

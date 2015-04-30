@@ -9,4 +9,5 @@
  */
 angular.module('uCartApp')
   .controller('CouponsController', function ($scope) {
+  	$scope.temp = false;
   });
