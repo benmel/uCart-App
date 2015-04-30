@@ -26,7 +26,7 @@ angular.module('uCartApp')
 	    var item = angular.copy($scope.item);
 	    if (item.itemName && item.quantity > 0 && item.price > 0) {
 	    	$scope.subtotal += (item.quantity * item.price);
-	    	$scope.tax = calculateTax($scope.subtotal);
+	    	$scope.tax = $scope.calculateTax($scope.subtotal);
 	    	$scope.total = $scope.subtotal + $scope.tax;
 				$scope.items.push(item);
 
@@ -34,19 +34,19 @@ angular.module('uCartApp')
     		$scope.item.quantity = 0;
     		$scope.item.price = 0;
 			} else {
-				window.alert('not valid');
+				window.alert('Item not valid');
 			}
 		};
 
 		$scope.removeItem = function(index) {
 			var item = $scope.items[index];
 			$scope.subtotal -= (item.quantity * item.price);
-	    $scope.tax = calculateTax($scope.subtotal);
+	    $scope.tax = $scope.calculateTax($scope.subtotal);
 	    $scope.total = $scope.subtotal + $scope.tax;
 			$scope.items.splice(index, 1);
 		};
   
-		var calculateTax = function(subtotal) {
+		$scope.calculateTax = function(subtotal) {
 			return Math.round(subtotal * 0.0925 * 100) / 100;
 		};
 
@@ -54,7 +54,7 @@ angular.module('uCartApp')
 			$scope.state = 'scanning';
 		};
 
-		$scope.startPayment = function() {
+		$scope.startPaying = function() {
 			$scope.state = 'paying';
 		};
 
