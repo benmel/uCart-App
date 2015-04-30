@@ -9,35 +9,33 @@
  */
 angular.module('uCartApp')
   .controller('MainController', function ($scope) {
+    $scope.state = 'scanning';
+    
     $scope.items = [];
-
-    $scope.itemName = '';
-    $scope.quantity = 0;
-    $scope.price = 0;
+    $scope.item = { itemName: '', quantity: 0, price: 0 };
 
     $scope.subtotal = 0;
     $scope.tax = 0;
     $scope.total = 0;
 
+    $scope.verification = { code: 'abcxyz123', input: '' };
+    $scope.idVerificationNeeded = false;
+    $scope.idVerified = false;
+
     $scope.addItem = function(){
-	    var item = {
-	        itemName: $scope.itemName,
-	        quantity: $scope.quantity,
-	        price: $scope.price
-	    };
+	    var item = angular.copy($scope.item);
 	    if (item.itemName && item.quantity > 0 && item.price > 0) {
 	    	$scope.subtotal += (item.quantity * item.price);
 	    	$scope.tax = calculateTax($scope.subtotal);
 	    	$scope.total = $scope.subtotal + $scope.tax;
 				$scope.items.push(item);
 
-	    	$scope.itemName = '';
-    		$scope.quantity = 0;
-    		$scope.price = 0;
+	    	$scope.item.itemName = '';
+    		$scope.item.quantity = 0;
+    		$scope.item.price = 0;
 			} else {
 				window.alert('not valid');
 			}
-
 		};
 
 		$scope.removeItem = function(index) {
@@ -50,7 +48,22 @@ angular.module('uCartApp')
   
 		var calculateTax = function(subtotal) {
 			return Math.round(subtotal * 0.0925 * 100) / 100;
+		};
+
+		$scope.startScanning = function() {
+			$scope.state = 'scanning';
+		};
+
+		$scope.startPayment = function() {
+			$scope.state = 'paying';
+		};
+
+		$scope.verify = function() {
+			if (angular.equals($scope.verification.code, $scope.verification.input)) {
+				$scope.idVerified = true;
+			} else {
+				window.alert('Incorrect code');
+			}
 		};	
 
   });
-
