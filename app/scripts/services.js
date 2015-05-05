@@ -2,51 +2,60 @@
 
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
+.factory('CartItems', function() {
+  var items = [];
+  var id = 0;
 
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
-  },{
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'https://pbs.twimg.com/profile_images/491995398135767040/ie2Z_V6e.jpeg'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'https://pbs.twimg.com/profile_images/578237281384841216/R3ae1n61.png'
-  }];
+  var subtotal = 0;
+  var tax = 0;
+  var total = 0;
+
+  function addToTotal(item) {
+    subtotal += item.price * item.quantity;
+    updateTotal();
+  }
+
+  function removeFromTotal(item) {
+    subtotal -= item.price * item.quantity;
+    updateTotal();
+  }
+
+  function updateTotal() {
+    tax = Math.round(subtotal * 0.0925 * 100) / 100;
+    total = subtotal + tax;
+  }
 
   return {
     all: function() {
-      return chats;
+      return items;
     },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+    add: function (item) {
+      if (item.id === null) {
+        item.id = id++;
+        items.push(item);
+        addToTotal(item);
+      } else {
+        for (var i in items) {
+          if (items[i].id === item.id) {
+            removeFromTotal(items[i]);
+            items[i] = item;
+            updateTotal(item);
+          }
         }
       }
-      return null;
+    },
+    remove: function(item) {
+      removeFromTotal(item);
+      items.splice(items.indexOf(item), 1);
+    },
+    getSubtotal: function() {
+      return subtotal;
+    },
+    getTax: function() {
+      return tax;
+    },
+    getTotal: function() {
+      return total;
     }
   };
 });
