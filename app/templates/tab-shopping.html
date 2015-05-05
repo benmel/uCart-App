@@ -1,0 +1,23 @@
+<ion-view view-title="Shopping">
+  <ion-content>
+    <ion-list>
+      
+      <ion-item>
+        <div class="row">
+          <div class="col col-50"><b>Item</b></div>
+          <div class="col"><b>Price</b></div>
+          <div class="col"><b>Quantity</b></div>
+        </div>  
+      </ion-item>
+
+      <ion-item ng-repeat="item in items">
+        <div class="row">
+          <div class="col col-50">{{ item.name }}</div>
+          <div class="col">{{ item.quantity }}</div>
+          <div class="col">{{ item.price }}</div>
+        </div> 
+      </ion-item>
+    
+    </ion-list>
+  </ion-content>
+</ion-view>
