@@ -58,4 +58,43 @@ angular.module('starter.services', [])
       return total;
     }
   };
+})
+
+.factory('IdVerification', function() {
+  var code = 'abcxyz123';
+  var idVerified = false;
+  var idVerificationNeeded = false;
+
+  return {
+    getIdVerificationNeeded: function() {
+      return idVerificationNeeded;
+    },
+    setIdVerificationNeeded: function(input) {
+      if (typeof(input) == 'boolean') {
+        idVerificationNeeded = input;
+      }
+    },
+    verifyId: function(input) {
+      if (angular.equals(code, input)) {
+        idVerified = true;
+        return true;
+      } else {
+        return false;
+      }
+    },
+    showPaymentOptions: function() {
+      if (!idVerificationNeeded || idVerified) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    showVerificationNeeded: function() {
+      if (idVerificationNeeded && !idVerified) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
 });

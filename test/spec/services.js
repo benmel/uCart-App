@@ -104,3 +104,87 @@ describe('Services: CartItems', function() {
 		});
 	});
 });
+
+describe('Services: IdVerification', function() {
+	var IdVerification;
+  
+  // load the service's module and initialize service
+  beforeEach(function() {
+  	module('starter.services');
+  	inject(function (_IdVerification_) {
+    	IdVerification = _IdVerification_;
+    });
+	});
+
+	describe('getIdVerificationNeeded', function() {
+		it('should return a boolean', function() {
+			IdVerification.getIdVerificationNeeded().should.be.a('boolean');
+		})
+	});
+
+	describe('setIdVerificationNeeded', function() {
+		it('should update idVerificationNeeded if input is a boolean', function() {
+			var currentValue = IdVerification.getIdVerificationNeeded();
+			var updatedValue = !currentValue;
+			IdVerification.setIdVerificationNeeded(updatedValue);
+			IdVerification.getIdVerificationNeeded().should.equal.updatedValue;
+		});
+		it('should not update idVerificationNeeded if input not a boolean', function() {
+			var currentValue = IdVerification.getIdVerificationNeeded();
+			IdVerification.setIdVerificationNeeded('wrong_value');
+			IdVerification.getIdVerificationNeeded().should.equal.currentValue;
+		});
+	});
+
+	describe('verifyId', function() {
+		it('should return true if code and input are the same', function() {
+			IdVerification.verifyId('abcxyz123').should.be.true;
+		});
+		it('should return false if code and input are not the same', function() {
+			IdVerification.verifyId('wrong_code').should.be.false;
+		});
+	});
+
+	describe('showPaymentOptions', function() {
+		it('should return true if id has not been verified and id verification is not needed', function() {
+			IdVerification.setIdVerificationNeeded(false);
+			IdVerification.showPaymentOptions().should.be.true;
+		});
+		it('should return false if id has not been verified and id verification is needed', function() {
+			IdVerification.setIdVerificationNeeded(true);
+			IdVerification.showPaymentOptions().should.be.false;
+		});
+		it('should return true if id has been verified and id verification is not needed', function() {
+			IdVerification.verifyId('abcxyz123');
+			IdVerification.setIdVerificationNeeded(false);
+			IdVerification.showPaymentOptions().should.be.true;
+		});
+		it('should return false if id has been verified and id verification is needed', function() {
+			IdVerification.verifyId('abcxyz123');
+			IdVerification.setIdVerificationNeeded(true);
+			IdVerification.showPaymentOptions().should.be.true;
+		});
+	});
+
+	describe('showVerificationNeeded', function() {
+		it('should return false if id has not been verified and id verification is not needed', function() {
+			IdVerification.setIdVerificationNeeded(false);
+			IdVerification.showVerificationNeeded().should.be.false;
+		});
+		it('should return true if id has not been verified and id verification is needed', function() {
+			IdVerification.setIdVerificationNeeded(true);
+			IdVerification.showVerificationNeeded().should.be.true;
+		});
+		it('should return false if id has been verified and id verification is not needed', function() {
+			IdVerification.verifyId('abcxyz123');
+			IdVerification.setIdVerificationNeeded(false);
+			IdVerification.showVerificationNeeded().should.be.false;
+		});
+		it('should return false if id has been verified and id verification is needed', function() {
+			IdVerification.verifyId('abcxyz123');
+			IdVerification.setIdVerificationNeeded(true);
+			IdVerification.showVerificationNeeded().should.be.false;
+		});
+	});
+
+});
