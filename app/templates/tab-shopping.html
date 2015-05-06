@@ -44,9 +44,9 @@
     </div>
 
     <div class="item">
-      Subtotal: {{ subtotal() }}<br>
-      Tax: {{ tax() }}<br>
-      Total: {{ total() }}
+      Subtotal: {{ subtotal().toFixed(2) }}<br>
+      Tax: {{ tax().toFixed(2) }}<br>
+      Total: {{ total().toFixed(2) }}
     </div>    
 
   </ion-content>

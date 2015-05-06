@@ -13,13 +13,13 @@ angular.module('starter.controllers', [])
 	$scope.add = function() {
 		var item = angular.copy($scope.item);
 	  if (item.name && item.quantity > 0 && item.price > 0) {
-			CartItems.add(angular.copy(item));
+			CartItems.add(item);
 			$scope.item = { id: null, name: null, quantity: null, price: null };
 		} else {
 			window.alert('Item not valid');
-		}	
+		}
 	};
-	
+
 	$scope.remove = function(item) {
 		CartItems.remove(item);
 	};

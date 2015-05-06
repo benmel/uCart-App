@@ -21,7 +21,7 @@ angular.module('starter.services', [])
   }
 
   function updateTotal() {
-    tax = Math.round(subtotal * 0.0925 * 100) / 100;
+    tax = subtotal * 0.0925;
     total = subtotal + tax;
   }
 
@@ -39,7 +39,7 @@ angular.module('starter.services', [])
           if (items[i].id === item.id) {
             removeFromTotal(items[i]);
             items[i] = item;
-            updateTotal(item);
+            addToTotal(item);
           }
         }
       }
