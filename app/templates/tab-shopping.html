@@ -1,0 +1,90 @@
+<ion-view view-title="Shopping">
+  <ion-content>
+    <ion-list>
+      
+      <div ng-switch on="state">
+        <div ng-switch-when="scanning">
+          <ion-item>
+            <div class="row">
+              <div class="col col-33"><b>Item</b></div>
+              <div class="col col-25"><b>Price</b></div>
+              <div class="col col-25"><b>Quantity</b></div>
+              <div class="col"></div>
+            </div>  
+          </ion-item>
+
+          <ion-item ng-repeat="item in items">
+            <div class="row">
+              <div class="col col-33">{{ item.name }}</div>
+              <div class="col col-25">{{ item.quantity }}</div>
+              <div class="col col-25">{{ item.price }}</div>
+              <div class="col">
+                <button class="button button-assertive" ng-click="remove(item)">Delete</button>
+              </div>
+            </div> 
+          </ion-item>
+        
+        </ion-list>
+
+        <div class="item item-input-inset">
+          <div class="padding-horizontal">
+            <label class="item-input-wrapper">
+              <input type="text" placeholder="Item" ng-model="item.name">
+            </label>
+          </div>
+          <div class="padding-horizontal">
+            <label class="item-input-wrapper">
+              <input type="number" placeholder="Quantity" min="0" ng-model="item.quantity">
+            </label>
+          </div>
+          <div class="padding-horizontal">
+            <label class="item-input-wrapper">
+              <input type="number" placeholder="Price" min="0" ng-model="item.price">
+            </label>
+          </div>
+          <button class="button button-small" ng-click="add()">Add</button>
+        </div>
+
+        <ion-item>
+          <button class="button button-positive" ng-click="startPaying()">Checkout</button>
+        </ion-item>
+      </div>
+      
+      <div ng-switch-when="paying">
+        <ion-item>
+          <div class="row">
+            <div class="col col-33">
+              <button class="button button-block button-positive" ng-click="startScanning()">Back</button>
+              <button class="button button-block button-positive" ng-show="showPaymentOptions()">Pay with card</button>
+              <button class="button button-block button-positive" ng-show="showPaymentOptions()">Pay with cash</button>
+            </div>
+          </div>
+        </ion-item>
+
+        <div ng-show="showVerificationNeeded()">
+          <ion-item>
+            Alcohol purchase requires ID verification<br>
+            Proceed to employee ID verification station
+          </ion-item>
+          <div class="item item-input-inset">
+            <div class="padding-horizontal">
+              <label class="item-input-wrapper">
+                <input type="text" placeholder="Verification Code" ng-model="code.input">
+              </label>
+            </div>
+            <button class="button button-small" ng-click="verifyId()">
+              Verify
+            </button>
+          </div>
+        </div>
+      </div> 
+    </div>
+
+    <div class="item">
+      Subtotal: {{ subtotal().toFixed(2) }}<br>
+      Tax: {{ tax().toFixed(2) }}<br>
+      Total: {{ total().toFixed(2) }}
+    </div>    
+
+  </ion-content>
+</ion-view>
