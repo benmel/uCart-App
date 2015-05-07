@@ -23,12 +23,13 @@ See this [link](https://github.com/diegonetto/generator-ionic/blob/master/docs/a
 2. Download and install Android Studio from [here](https://developer.android.com/sdk/index.html)
 3. `touch ~/.bash_profile; open ~/.bash_profile`
 4. To `~/.bash_profile` add:
-```
+   
+   ```
    export PATH=/user/local/bin:$PATH
    export PATH=$PATH:<path to sdk/tools>
    export PATH=${PATH}:<path to sdk/tools>:<path to sdk/tools>
-```
-   `<path to sdk>` is something like `/Users/Ben/Library/Android/sdk/tools` 
+   ```
+   `<path to sdk>` is something like `/Users/Ben/Library/Android/sdk/tools`
 5. `source ~/.bash_profile`
 6. `brew install ant`
 7. `android`
