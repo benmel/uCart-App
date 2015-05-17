@@ -1,4 +1,42 @@
-<ion-view view-title="Grocery List">
+
+<ion-view view-title="Groceries List">
   <ion-content>
+    <ion-list>
+	  <ion-item>
+	    <div class="row">
+	      <div class="col col-33"><b>Item</b></div>
+	      <div class="col"></div>
+	    </div>  
+	  </ion-item>
+
+	  <ion-item ng-repeat="item in items">
+	    <div class="row">
+	      <div class="col col-33">{{ item.name }}</div>
+	      <div class="col">
+	        <button class="button button-assertive" ng-click="remove(item)">Delete</button>
+	      </div>
+	    </div> 
+	  </ion-item>
+	</ion-list>
+
+	Search: <input ng-model="query">
+	Sort by:
+	<select ng-model="orderProp">
+		<option value="name">Alphabetical</option>
+		<option value="age">Newest</option>
+	</select>
+
+	<ul class="list">
+		<div class="padding-horizontal">
+			<li ng-repeat="item in list | filter:query | orderBy:orderProp">
+				<span>{{item.name}}</span>
+				<p>{{item.snippet}}</p>
+				<button class="button button-small" ng-click="add(item.name)">Add</button>
+    			<hr>
+    		</li>
+    	</div>
+    </ul>
+    
+ 
   </ion-content>
 </ion-view>
