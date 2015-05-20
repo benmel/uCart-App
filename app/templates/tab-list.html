@@ -1,42 +1,40 @@
 
 <ion-view view-title="Groceries List">
-  <ion-content>
-    <ion-list>
-	  <ion-item>
-	    <div class="row">
-	      <div class="col col-33"><b>Item</b></div>
-	      <div class="col"></div>
-	    </div>  
-	  </ion-item>
+	<ion-content>
+		<div class="row">
+			<div class="col">
+				<ion-list>
+				<ion-item style="height:50px">
+				Grocery List
+				</ion-item>
+					<ion-item class ="item item-icon-left item-icon-right" ng-repeat="item in items">
+						<i class="icon ion-help-circled"></i>
+						<span style="color:red">{{item.name}}</span>
+						<i class="icon ion-minus" ng-click="remove(item)"></i>	
+					</ion-item>
+				</ion-list>
+			</div>
 
-	  <ion-item ng-repeat="item in items">
-	    <div class="row">
-	      <div class="col col-33">{{ item.name }}</div>
-	      <div class="col">
-	        <button class="button button-assertive" ng-click="remove(item)">Delete</button>
-	      </div>
-	    </div> 
-	  </ion-item>
-	</ion-list>
 
-	Search: <input ng-model="query">
-	Sort by:
-	<select ng-model="orderProp">
-		<option value="name">Alphabetical</option>
-		<option value="age">Newest</option>
-	</select>
+<div class="col">
+	<label class = "item item-input">
+		<i class = "icon ion-search placeholder-icon"></i>
+		<input type ="text" placeholder="Search" ng-model ="query">
+	</label>
 
-	<ul class="list">
-		<div class="padding-horizontal">
-			<li ng-repeat="item in list | filter:query | orderBy:orderProp">
-				<span>{{item.name}}</span>
-				<p>{{item.snippet}}</p>
-				<button class="button button-small" ng-click="add(item.name)">Add</button>
-    			<hr>
-    		</li>
-    	</div>
-    </ul>
-    
+	<ion-list>
+	<ion-item class ="item item-icon-right" ng-repeat="item in list | filter:query | orderBy:'name'">
+	<span style="color:blue">{{item.name}}</span>
+	<p> {{item.snippet}}</p>
+	<i class="icon ion-plus" ng-click="add(item.name)"></i>	
+
+    </div>
+
+    </ion-item>
+    </ion-list>
+   
+    </div>
+   </div>
  
   </ion-content>
 </ion-view>

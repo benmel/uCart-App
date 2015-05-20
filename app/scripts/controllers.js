@@ -46,26 +46,35 @@ angular.module('starter.controllers', [])
 	};
 })
 
-.controller('ListCtrl', function($scope, CartItems, IdVerification) {
-  
+.controller('ListCtrl', function($scope, GroceryItems) {
 
-  $scope.items = CartItems.all();
+
+  $scope.defaultEntry = "Please type to search"  
+
+  var oriBox = angular.copy($scope.defaultEntry);
+
+   $scope.resetForm = function ()
+    {
+      $scope.defaultEntry = angular.copy(oriBox);
+      $scope.defaultEntryForm.$setPristine();
+    };
+
+     $scope.isBoxChanged = function ()
+    {
+      return !angular.equals($scope.defaultEntry, oriBox);
+    };
+
+
+  $scope.items = GroceryItems.all();
   $scope.item = { id: null, name: null, quantity: null, price: null };
   
-  $scope.subtotal = CartItems.getSubtotal;
-  $scope.tax = CartItems.getTax;
-  $scope.total = CartItems.getTotal;
 
-  $scope.showVerificationNeeded = IdVerification.showVerificationNeeded;
-  $scope.showPaymentOptions = IdVerification.showPaymentOptions;
-  $scope.code = { input: null } ;
   
   $scope.add = function(itemNameInput) {
     var itemName = itemNameInput;
     var itemArray = { id:null, name:itemName, quantity:null, price:null};
      if (itemArray.name) {
-      alert(itemArray.name);
-      CartItems.add(itemArray);
+      GroceryItems.add(itemArray);
       $scope.item = { id: null, name: null, quantity: null, price: null };
     } else {
       window.alert('Item not valid');
@@ -73,25 +82,36 @@ angular.module('starter.controllers', [])
   };
 
   $scope.remove = function(item) {
-    CartItems.remove(item);
+    GroceryItems.remove(item);
   };
 
    $scope.list = [
     {'name': 'Banana',
-     'snippet': 'Full of potassium',
-     'age': 1},
+     'snippet': 'full of potassium'},
     {'name': 'Milk',
-     'snippet': 'Get your calcium',
-     'age': 2},
+     'snippet': 'get your calcium'},
     {'name': 'Chicken breast',
-     'snippet': 'ultimate protean source',
-     'age': 3},
-     {'name': 'Apple',
-     'snippet': 'an apple a day keep doctors away',
-     'age': 4},
-     {'name': 'Oranges',
-     'snippet': 'from Valencia. period.',
-     'age': 5}
+     'snippet': 'ultimate protean source'},
+    {'name': 'Apple',
+     'snippet': 'an apple a day keep doctors away'},
+    {'name': 'Grape',
+    'snippet': 'antioxidant rich'},
+    {'name': 'Lamb chop',
+     'snippet': 'mehhhh'},
+    {'name': 'Shrimp',
+     'snippet': 'grill it, fry it, bake it, boil it, steam it'},
+    {'name': 'Chocolate',
+     'snippet': 'get it fir your girl is angry'},
+    {'name': 'Granola',
+     'snippet': 'healthy snack choice'},
+    {'name': 'Beer',
+     'snippet': 'just one can before bed'},
+    {'name': 'Wine',
+     'snippet': 'best icebreaker'},
+    {'name': 'Flour',
+     'snippet': 'baking tonight'},
+    {'name': 'Oranges',
+     'snippet': 'from Valencia. period.'}
   ];
 
   $scope.orderProp = 'age';
