@@ -52,12 +52,19 @@ angular.module('starter.controllers', [])
 		$scope.barcodes.push(barcode);
 	}
 
-	$scope.$on('$ionicView.enter', function() {
+	$scope.$on('$ionicView.loaded', function() {
     Bluetooth.setReadCallback(readBarcode);
+	});
+
+	$scope.$on('$ionicView.enter', function() {
     Bluetooth.startConnectPoll();
 	});
 
 	$scope.$on('$ionicView.leave', function() {
+    Bluetooth.stopConnectPoll();
+	});
+
+	$scope.$on('$ionicView.unloaded', function() {
     Bluetooth.stopRead();
     Bluetooth.stopConnectPoll();
 	});

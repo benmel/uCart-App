@@ -198,6 +198,10 @@ angular.module('starter.services', [])
       readCallback = callback;
     },
 
+    startRead: function() {
+      startRead();
+    },
+
     stopRead: function() {
       stopRead();
     }
