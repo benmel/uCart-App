@@ -97,4 +97,109 @@ angular.module('starter.services', [])
       }
     }
   };
+})
+
+.factory('Bluetooth', function($q, $interval) {
+  var poll;
+  var readCallback;
+
+  function getDevice() {
+    return $q(function(resolve, reject) {
+      bluetoothSerial.list(
+        function(devices) {
+          var deviceId = '';
+          devices.forEach(function(device) {
+            if (device.name.indexOf('ucartpi') >= 0) {
+              deviceId = device.id;
+            }
+          });
+          if (deviceId) {
+            resolve(deviceId);
+          } else {
+            reject();
+          }
+        },
+        function(error) {
+          reject(error);
+        }
+      );
+    });
+  }
+
+  function createConnection(deviceId) {
+    return $q(function(resolve, reject) {
+      bluetoothSerial.connect(deviceId, 
+        function() {
+          resolve();
+        }, 
+        function(error) {
+          reject(error);
+        }
+      );
+    });
+  }
+
+  function connect() {
+    getDevice().then(createConnection).then(startRead);
+  }
+
+  function isConnected() {
+    return $q(function(resolve, reject) {
+      bluetoothSerial.isConnected(
+        function() {
+          resolve();
+        },
+        function() {
+          reject();
+        }
+      );
+    });
+  }
+
+  function startConnectPoll() {
+    poll = $interval(function() {
+      isConnected().catch(function() {
+        connect();
+      });
+    }, 3000);
+  }
+
+  function stopConnectPoll() {
+    if (angular.isDefined(poll)) {
+      $interval.cancel(poll);
+      poll = undefined;
+    }
+  }
+
+  function startRead() {
+    bluetoothSerial.subscribe('\n',
+      function(data) {
+        readCallback(data);
+      },
+      function() {
+      }
+    );
+  }
+
+  function stopRead() {
+    bluetoothSerial.unsubscribe();
+  }
+
+  return {
+    startConnectPoll: function() {
+      startConnectPoll();  
+    },
+
+    stopConnectPoll: function() {
+      stopConnectPoll();
+    },
+
+    setReadCallback: function(callback) {
+      readCallback = callback;
+    },
+
+    stopRead: function() {
+      stopRead();
+    }
+  };
 });

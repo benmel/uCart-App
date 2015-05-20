@@ -2,7 +2,7 @@
 
 angular.module('starter.controllers', [])
 
-.controller('ShoppingCtrl', function($scope, CartItems, IdVerification) {
+.controller('ShoppingCtrl', function($scope, CartItems, IdVerification, Bluetooth) {
 	$scope.state = 'scanning';
 
 	$scope.items = CartItems.all();
@@ -14,7 +14,7 @@ angular.module('starter.controllers', [])
 
 	$scope.showVerificationNeeded = IdVerification.showVerificationNeeded;
 	$scope.showPaymentOptions = IdVerification.showPaymentOptions;
-	$scope.code = { input: null } ;
+	$scope.code = { input: null };
 	
 	$scope.add = function() {
 		var item = angular.copy($scope.item);
@@ -44,6 +44,23 @@ angular.module('starter.controllers', [])
 			window.alert('Incorrect code');
 		}
 	};
+
+	$scope.barcodes = [];
+
+	function readBarcode(barcode) {
+		window.alert(barcode);
+		$scope.barcodes.push(barcode);
+	}
+
+	$scope.$on('$ionicView.enter', function() {
+    Bluetooth.setReadCallback(readBarcode);
+    Bluetooth.startConnectPoll();
+	});
+
+	$scope.$on('$ionicView.leave', function() {
+    Bluetooth.stopRead();
+    Bluetooth.stopConnectPoll();
+	});
 })
 
 .controller('ListCtrl', function($scope) {
