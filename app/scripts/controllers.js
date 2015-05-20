@@ -48,22 +48,7 @@ angular.module('starter.controllers', [])
 
 .controller('ListCtrl', function($scope, GroceryItems) {
 
-
-  $scope.defaultEntry = "Please type to search"  
-
-  var oriBox = angular.copy($scope.defaultEntry);
-
-   $scope.resetForm = function ()
-    {
-      $scope.defaultEntry = angular.copy(oriBox);
-      $scope.defaultEntryForm.$setPristine();
-    };
-
-     $scope.isBoxChanged = function ()
-    {
-      return !angular.equals($scope.defaultEntry, oriBox);
-    };
-
+  $scope.input = { query: '' }; 
 
   $scope.items = GroceryItems.all();
   $scope.item = { id: null, name: null, quantity: null, price: null };
@@ -114,7 +99,12 @@ angular.module('starter.controllers', [])
      'snippet': 'from Valencia. period.'}
   ];
 
-  $scope.orderProp = 'age';
+  $scope.clearQuery = function() {
+
+    $scope.input.query = '';
+
+
+  };
 
 
 })

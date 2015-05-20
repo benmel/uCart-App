@@ -1,6 +1,9 @@
 
 <ion-view view-title="Groceries List">
 	<ion-content>
+
+
+
 		<div class="row">
 			<div class="col">
 				<ion-list>
@@ -17,13 +20,15 @@
 
 
 <div class="col">
-	<label class = "item item-input">
-		<i class = "icon ion-search placeholder-icon"></i>
-		<input type ="text" placeholder="Search" ng-model ="query">
-	</label>
+		<label class = "item item-input">
+			<i class = "icon ion-search placeholder-icon"></i>
+			<input type ="text" placeholder="Search" ng-model ="input.query">
+		</label>
+		<button type="button" ng-click="clearQuery()">Clear </button>
+	
 
 	<ion-list>
-	<ion-item class ="item item-icon-right" ng-repeat="item in list | filter:query | orderBy:'name'">
+	<ion-item class ="item item-icon-right" ng-repeat="item in list | filter: input.query | orderBy:'name'">
 	<span style="color:blue">{{item.name}}</span>
 	<p> {{item.snippet}}</p>
 	<i class="icon ion-plus" ng-click="add(item.name)"></i>	
@@ -38,3 +43,6 @@
  
   </ion-content>
 </ion-view>
+
+
+
