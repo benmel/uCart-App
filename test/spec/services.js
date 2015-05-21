@@ -38,27 +38,49 @@ describe('Services: CartItems', function() {
 
   describe('add', function() {
   	beforeEach(function() {
-  		var item = { id: null, name: 'Banana', quantity: 5, price: 1 };
-  		CartItems.add(item);
-  	});
-  	it('should add to items array if id is null', function() {
+  		var barcode = '123456789';
+  		CartItems.add(barcode);
+  	});	
+  	it('should add to items array', function() {
   		CartItems.all().should.have.length(1);
   	});
-  	it('should give an id to item if id is null', function() {
+  	it('should give an id to item', function() {
   		var newItem = CartItems.all()[0];
   		newItem.id.should.not.be.null;
   	})
-  	it('should update subtotal, tax and total if id is null', function() {
-  		CartItems.getSubtotal().should.equal(5);
-  		CartItems.getTax().should.equal(5*0.0925);
-  		CartItems.getTotal().should.equal(5+5*0.0925);
+  	it('should update subtotal, tax and total', function() {
+  		CartItems.getSubtotal().should.equal(1);
+  		CartItems.getTax().should.equal(1*0.0925);
+  		CartItems.getTotal().should.equal(1+1*0.0925);
+  	});
+  });
+
+  describe('addInput', function() {
+  	beforeEach(function() {
+  		var item = { id: null, name: 'Banana', quantity: 5, price: 1 };
+  		CartItems.addInput(item);
+  	});
+
+  	describe('id is null', function() {
+	  	it('should add to items array if id is null', function() {
+	  		CartItems.all().should.have.length(1);
+	  	});
+	  	it('should give an id to item if id is null', function() {
+	  		var newItem = CartItems.all()[0];
+	  		newItem.id.should.not.be.null;
+	  	})
+	  	it('should update subtotal, tax and total if id is null', function() {
+	  		CartItems.getSubtotal().should.equal(5);
+	  		CartItems.getTax().should.equal(5*0.0925);
+	  		CartItems.getTotal().should.equal(5+5*0.0925);
+	  	});
   	});
 
   	describe('id is not null', function() {
 	  	beforeEach(function() {
 	  		var newItem = angular.copy(CartItems.all()[0]);
 	  		newItem.quantity = 3;
-	  		CartItems.add(newItem);
+	  		CartItems.addInput(newItem);
 	  	});
 	  	it('should update item', function() {
 	  		// get item and update it
@@ -88,9 +110,9 @@ describe('Services: CartItems', function() {
   		var banana = { id: null, name: 'Banana', quantity: 5, price: 1 };
   		var apple = { id: null, name: 'Apple', quantity: 3, price: 2 };
   		var orange = { id: null, name: 'Orange', quantity: 2, price: 1.5 };
-  		CartItems.add(banana);
-  		CartItems.add(apple);
-  		CartItems.add(orange);
+  		CartItems.addInput(banana);
+  		CartItems.addInput(apple);
+  		CartItems.addInput(orange);
   		var item = CartItems.all()[2];
   		CartItems.remove(item);
   	});
@@ -186,5 +208,4 @@ describe('Services: IdVerification', function() {
 			IdVerification.showVerificationNeeded().should.be.false;
 		});
 	});
-
 });
