@@ -36,10 +36,10 @@ describe('Services: CartItems', function() {
 		});
   });
 
-  describe('add', function() {
+  describe('addInput', function() {
   	beforeEach(function() {
   		var item = { id: null, name: 'Banana', quantity: 5, price: 1 };
-  		CartItems.add(item);
+  		CartItems.addInput(item);
   	});
   	it('should add to items array if id is null', function() {
   		CartItems.all().should.have.length(1);
@@ -58,7 +58,7 @@ describe('Services: CartItems', function() {
 	  	beforeEach(function() {
 	  		var newItem = angular.copy(CartItems.all()[0]);
 	  		newItem.quantity = 3;
-	  		CartItems.add(newItem);
+	  		CartItems.addInput(newItem);
 	  	});
 	  	it('should update item', function() {
 	  		// get item and update it
@@ -88,9 +88,9 @@ describe('Services: CartItems', function() {
   		var banana = { id: null, name: 'Banana', quantity: 5, price: 1 };
   		var apple = { id: null, name: 'Apple', quantity: 3, price: 2 };
   		var orange = { id: null, name: 'Orange', quantity: 2, price: 1.5 };
-  		CartItems.add(banana);
-  		CartItems.add(apple);
-  		CartItems.add(orange);
+  		CartItems.addInput(banana);
+  		CartItems.addInput(apple);
+  		CartItems.addInput(orange);
   		var item = CartItems.all()[2];
   		CartItems.remove(item);
   	});
