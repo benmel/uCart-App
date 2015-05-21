@@ -19,7 +19,7 @@ angular.module('starter.controllers', [])
 	$scope.add = function() {
 		var item = angular.copy($scope.item);
 	  if (item.name && item.quantity > 0 && item.price > 0) {
-			CartItems.add(item);
+			CartItems.addInput(item);
 			$scope.item = { id: null, name: null, quantity: null, price: null };
 		} else {
 			window.alert('Item not valid');
@@ -45,14 +45,10 @@ angular.module('starter.controllers', [])
 		}
 	};
 
-	$scope.barcodes = [];
-
-	function readBarcode(barcode) {
-		window.alert(barcode);
-		$scope.barcodes.push(barcode);
-	}
-
 	$scope.$on('$ionicView.loaded', function() {
+    var readBarcode = function(barcode) {
+    	CartItems.add(barcode);
+    };
     Bluetooth.setReadCallback(readBarcode);
 	});
 

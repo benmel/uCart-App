@@ -29,7 +29,14 @@ angular.module('starter.services', [])
     all: function() {
       return items;
     },
-    add: function (item) {
+    add: function (barcode) {
+      // temporary, search server with barcode
+      var item = { id: null, barcode: barcode, name: barcode, quantity: 1, price: 1 };
+      item.id = id++;
+      items.push(item);
+      addToTotal(item);
+    },
+    addInput: function(item) {
       if (item.id === null) {
         item.id = id++;
         items.push(item);
