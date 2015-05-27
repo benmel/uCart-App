@@ -1,4 +1,161 @@
+<style>
+
+  h5{
+    text-align: center;
+  }
+
+/*  div.row{
+    width: 100%;
+    height:400px;
+    overflow:auto;
+  }
+*/
+
+
+  </style>
+
+
+
+
+<br><ion-header-bar class ="bar-subheader item-input-inset">
+  <label class = "item-input-wrapper">
+    <i class = "icon ion-ios7-search placeholder-icon"></i>
+    <input type ="text" placeholder="Search" ng-model ="query">
+</label>
+</ion-header-bar>
+
+
 <ion-view view-title="Coupons">
   <ion-content>
-  </ion-content>
+  <ion-list>
+
+  
+
+
+
+<!-- 
+  <ion-item ng-repeat="coupon in coupons|filter:query|orderBy:'category'"style="float:left">  -->
+
+
+  <ion-item ng-repeat="coupon in coupons|filter:query|orderBy:['category','name']"style="float:left"> 
+
+  <div class="row">    
+
+    <div class="col">
+
+      <p><h5>{{coupon.category}}</p></h5>
+      <img ng-src={{coupon.img}}/>
+      <p>{{coupon.name}}</p>
+      <p>Old Price: {{coupon.newPrice}}</p>
+      <p>New Price: {{coupon.newPrice}}</p>
+      <button class ="button" ng-click="addToGrocery()">Add to List</button>
+    
+    </div>
+
+
+
+  </div>
+</div>
+
+
+</ion-item>
+</ion-item>
+
+
+
+</ion list>
+
+
+
+
+
+  
+
+ <!-- 
+ <br><br><h4>Vegetables</div>
+
+
+
+  <div class="row">
+
+    <div class="col"><img ng-src="http://placehold.it/280x150">
+      <h5>Price: $1.23 </h5>
+      <button class ="button" ng-click="addToGrocery()">Add to List</button>
+    </div>
+    
+    <div class="col"><img ng-src="http://placehold.it/280x150">
+    <h5>Price: $1.23 </h5>
+      <button class ="button" ng-click="addToGrocery()">Add to List</button>
+  
+    </div>
+  
+    <div class="col"><img ng-src="http://placehold.it/280x150">
+    <h5>Price: $1.23 </h5>
+      <button class ="button" ng-click="addToGrocery()">Add to List</button>
+  
+    </div>
+  
+  </div>
+
+  <br><br><h4>Fruits</div>
+
+
+  <div class="row">
+
+    <div class="col"><img ng-src="http://placehold.it/280x150">
+      <h5>Price: $1.23 </h5>
+      <button class ="button" ng-click="addToGrocery()">Add to List</button>
+  
+
+    </div>
+
+    <div class="col"><img ng-src="http://placehold.it/280x150">
+      <h5>Price: $1.23 </h5>
+      <button class ="button" ng-click="addToGrocery()">Add to List</button>
+    </div>
+  
+    
+    <div class="col"><img ng-src="http://placehold.it/280x150">
+      <h5>Price: $1.23 </h5>
+      <button class ="button" ng-click="addToGrocery()">Add to List</button>
+  
+
+    </div>
+    
+    
+  </div>
+ 
+
+
+<br><br><h4>Dairy Products</div>
+  
+  <div class="row">
+
+    <div class="col"><img ng-src="http://placehold.it/280x150">
+      <h5>Price: $1.23 </h5>
+      <button class ="button" ng-click="addToGrocery()">Add to List</button>
+  
+
+    </div>
+    
+    <div class="col"><img ng-src="http://placehold.it/280x150">
+      <h5>Price: $1.23 </h5>
+      <button class ="button" ng-click="addToGrocery()">Add to List</button>
+  
+
+    </div>
+    
+    <div class="col"><img ng-src="http://placehold.it/280x150">
+      <h5>Price: $1.23 </h5>
+      <button class ="button button" ng-click="addToGrocery()">Add to List</button>
+  
+
+    </div>
+
+  </div>
+
+ -->
+  
+
+</ion-content>
 </ion-view>
