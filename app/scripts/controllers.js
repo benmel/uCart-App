@@ -66,10 +66,14 @@ angular.module('starter.controllers', [])
 	});
 })
 
-.controller('ListCtrl', function($scope, GroceryItems) {
+.controller('ListCtrl', function($scope, $http, GroceryItems) {
   $scope.input = { query: '' };
   $scope.items = GroceryItems.all();
   
+  $http.get('https://ucart-server.herokuapp.com/api/v1/products').success(function(data) {
+    $scope.list = data;
+  });
+
   $scope.add = function(name) {
     GroceryItems.add(name);
   };
@@ -77,35 +81,6 @@ angular.module('starter.controllers', [])
   $scope.remove = function(item) {
     GroceryItems.remove(item);
   };
-
-   $scope.list = [
-    {'name': 'Banana',
-     'snippet': 'full of potassium'},
-    {'name': 'Milk',
-     'snippet': 'get your calcium'},
-    {'name': 'Chicken breast',
-     'snippet': 'ultimate protean source'},
-    {'name': 'Apple',
-     'snippet': 'an apple a day keep doctors away'},
-    {'name': 'Grape',
-    'snippet': 'antioxidant rich'},
-    {'name': 'Lamb chop',
-     'snippet': 'mehhhh'},
-    {'name': 'Shrimp',
-     'snippet': 'grill it, fry it, bake it, boil it, steam it'},
-    {'name': 'Chocolate',
-     'snippet': 'get it fir your girl is angry'},
-    {'name': 'Granola',
-     'snippet': 'healthy snack choice'},
-    {'name': 'Beer',
-     'snippet': 'just one can before bed'},
-    {'name': 'Wine',
-     'snippet': 'best icebreaker'},
-    {'name': 'Flour',
-     'snippet': 'baking tonight'},
-    {'name': 'Oranges',
-     'snippet': 'from Valencia. period.'}
-  ];
 
   $scope.clearQuery = function() {
     $scope.input.query = '';
