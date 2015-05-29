@@ -1,15 +1,11 @@
-
 <ion-view view-title="Groceries List">
-	<ion-content>
-
-
-
+	<ion-content scroll="false">
 		<div class="row">
 			<div class="col">
 				<ion-list>
-				<ion-item style="height:50px">
-				Grocery List
-				</ion-item>
+					<ion-item style="height:50px">
+						Grocery List
+					</ion-item>
 					<ion-item class ="item item-icon-left item-icon-right" ng-repeat="item in items">
 						<i class="icon ion-help-circled"></i>
 						<span style="color:red">{{item.name}}</span>
@@ -18,31 +14,22 @@
 				</ion-list>
 			</div>
 
-
-<div class="col">
-		<label class = "item item-input">
-			<i class = "icon ion-search placeholder-icon"></i>
-			<input type ="text" placeholder="Search" ng-model ="input.query">
-		</label>
-		<button type="button" ng-click="clearQuery()">Clear </button>
+			<div class="col">
+				<label class = "item item-input">
+					<i class = "icon ion-search placeholder-icon"></i>
+					<input type ="text" placeholder="Search" ng-model ="input.query">
+				</label>
+				<button type="button" ng-click="clearQuery()">Clear </button>
 	
-
-	<ion-list>
-	<ion-item class ="item item-icon-right" ng-repeat="item in list | filter: input.query | orderBy:'name'">
-	<span style="color:blue">{{item.name}}</span>
-	<p> {{item.snippet}}</p>
-	<i class="icon ion-plus" ng-click="add(item.name)"></i>	
-
+				<ion-list>
+					<ion-item class ="item item-icon-right" ng-repeat="item in list | filter: input.query | orderBy:'name'">
+						<span style="color:blue">{{item.name}}</span>
+						<p> {{item.snippet}}</p>
+						<i class="icon ion-plus" ng-click="add(item.name)"></i>	
+			    </ion-item>
+		    </ion-list>
+		  
+    	</div>
     </div>
-
-    </ion-item>
-    </ion-list>
-   
-    </div>
-   </div>
- 
   </ion-content>
 </ion-view>
-
-
-
