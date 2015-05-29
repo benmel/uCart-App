@@ -47,23 +47,11 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ListCtrl', function($scope, GroceryItems) {
-
-  $scope.input = { query: '' }; 
-
+  $scope.input = { query: '' };
   $scope.items = GroceryItems.all();
-  $scope.item = { id: null, name: null, quantity: null, price: null };
   
-
-  
-  $scope.add = function(itemNameInput) {
-    var itemName = itemNameInput;
-    var itemArray = { id:null, name:itemName, quantity:null, price:null};
-     if (itemArray.name) {
-      GroceryItems.add(itemArray);
-      $scope.item = { id: null, name: null, quantity: null, price: null };
-    } else {
-      window.alert('Item not valid');
-    }
+  $scope.add = function(name) {
+    GroceryItems.add(name);
   };
 
   $scope.remove = function(item) {
@@ -100,15 +88,9 @@ angular.module('starter.controllers', [])
   ];
 
   $scope.clearQuery = function() {
-
     $scope.input.query = '';
-
-
   };
-
-
 })
-
 
 .controller('CouponsCtrl', function($scope) {
 	$scope = null;

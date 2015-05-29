@@ -102,14 +102,16 @@ angular.module('starter.services', [])
 
 .factory('GroceryItems', function() {
   var items = [];
+  var id = 0;
 
   return {
     all: function() {
       return items;
     },
-    add: function (item) {
-        items.push(item);
-      } ,
+    add: function (name) {
+      var item = { id: id++, name: name };
+      items.push(item);
+    },
     remove: function(item) {
       items.splice(items.indexOf(item), 1);
     }
