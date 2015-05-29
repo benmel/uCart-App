@@ -2,7 +2,7 @@
 
 angular.module('starter.controllers', [])
 
-.controller('ShoppingCtrl', function($scope, CartItems, IdVerification) {
+.controller('ShoppingCtrl', function($scope, CartItems, IdVerification, Bluetooth) {
 	$scope.state = 'scanning';
 
 	$scope.items = CartItems.all();
@@ -14,12 +14,12 @@ angular.module('starter.controllers', [])
 
 	$scope.showVerificationNeeded = IdVerification.showVerificationNeeded;
 	$scope.showPaymentOptions = IdVerification.showPaymentOptions;
-	$scope.code = { input: null } ;
+	$scope.code = { input: null };
 	
 	$scope.add = function() {
 		var item = angular.copy($scope.item);
 	  if (item.name && item.quantity > 0 && item.price > 0) {
-			CartItems.add(item);
+			CartItems.addInput(item);
 			$scope.item = { id: null, name: null, quantity: null, price: null };
 		} else {
 			window.alert('Item not valid');
@@ -44,6 +44,26 @@ angular.module('starter.controllers', [])
 			window.alert('Incorrect code');
 		}
 	};
+
+	$scope.$on('$ionicView.loaded', function() {
+    var readBarcode = function(barcode) {
+    	CartItems.add(barcode);
+    };
+    Bluetooth.setReadCallback(readBarcode);
+	});
+
+	$scope.$on('$ionicView.enter', function() {
+    Bluetooth.startConnectPoll();
+	});
+
+	$scope.$on('$ionicView.leave', function() {
+    Bluetooth.stopConnectPoll();
+	});
+
+	$scope.$on('$ionicView.unloaded', function() {
+    Bluetooth.stopRead();
+    Bluetooth.stopConnectPoll();
+	});
 })
 
 .controller('ListCtrl', function($scope, GroceryItems) {
