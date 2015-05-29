@@ -1,1 +1,28 @@
 // Your application styles go here
+.leftpane{
+  width: 50% !important;
+  left: 0 !important;
+  right: 50% !important;
+}
+
+.rightpane{
+  width: 50% !important;
+  right: 0 !important;
+  left: 50% !important;
+}
+
+.bar-subheader{
+  height: 54px !important;
+}
+
+.has-subheader{
+  top: 97px !important;
+}
+
+.list-search{
+	color: blue;
+}
+
+.list-added{
+	color: red;
+}
