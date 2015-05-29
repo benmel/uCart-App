@@ -70,7 +70,7 @@ angular.module('starter.services', [])
       return idVerificationNeeded;
     },
     setIdVerificationNeeded: function(input) {
-      if (typeof(input) == 'boolean') {
+      if (typeof(input) === 'boolean') {
         idVerificationNeeded = input;
       }
     },

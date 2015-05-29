@@ -1,6 +1,6 @@
 <style>
 
-  h5{
+  h3{
     text-align: center;
   }
 
@@ -37,19 +37,18 @@
   <ion-item ng-repeat="coupon in coupons|filter:query|orderBy:'category'"style="float:left">  -->
 
 
-  <ion-item ng-repeat="coupon in coupons|filter:query|orderBy:['category','name']"style="float:left"> 
+  <ion-item ng-repeat="coup in coupons|filter:query|orderBy:['category','name']"style="float:left"> 
 
   <div class="row">    
 
     <div class="col">
 
-      <p><h5>{{coupon.category}}</p></h5>
-      <img ng-src={{coupon.img}}/>
-      <p>{{coupon.name}}</p>
-      <p>Old Price: {{coupon.newPrice}}</p>
-      <p>New Price: {{coupon.newPrice}}</p>
-      <button class ="button" ng-click="addToGrocery()">Add to List</button>
-    
+      <h3>{{coup.category}}</h3>
+      <img ng-src={{coup.coupon.image}} height="200" width="200"/>
+      <p>{{coup.name}}</p>
+      <p>Original Price: {{coup.price}}</p>
+      <p>Discounted Price: {{coup.coupon.price}}</p>
+      <button class ="button" ng-click="addToGrocery(coup)">Add to List</button>    
     </div>
 
 
