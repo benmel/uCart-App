@@ -86,7 +86,6 @@ angular.module('starter.controllers', [])
 
   
   $scope.add = function(name) {
-
     GroceryItems.add(name);
   };
 
@@ -108,9 +107,7 @@ angular.module('starter.controllers', [])
 
 
 .controller('CouponsCtrl', function($scope) {
-	  document.getElementById("demo").innerHTML = 5 + 6;
 
-	
 
 
 })

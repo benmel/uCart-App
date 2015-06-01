@@ -2,8 +2,11 @@
 	<ion-view class="leftpane">
 		<ion-content>
 			<ion-list>
-				<ion-item class ="item item-icon-right" ng-repeat="item in items">
-				<span class="list-added">{{item.name}} {{item.checked}}</span>
+				<ion-item class ="item item-icon-left item-icon-right" ng-repeat="item in items">
+					<i ng-class ="item.checked ? 'icon ion-ios-checkmark-outline' : 'icon ion-ios-circle-outline'"></i>
+<!-- 					<i class="icon ion-ios-circle-outline" ng-switch-when="false"></i>
+					<i class="icon ion-ios-checkmark-outline" ng-switch-when="true"></i>				 -->
+				<span class="list-added">{{item.name}}</span>
 				<i class="icon ion-minus" ng-click="remove(item)"></i>
 				</ion-item>
 			</ion-list>
