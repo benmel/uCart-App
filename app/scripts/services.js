@@ -2,7 +2,7 @@
 
 angular.module('starter.services', [])
 
-.factory('CartItems', function() {
+.factory('CartItems', function(GroceryItems) {
   var items = [];
   var id = 0;
 
@@ -37,6 +37,9 @@ angular.module('starter.services', [])
       addToTotal(item);
     },
     addInput: function(item) {
+      
+      GroceryItems.checkoff(item);
+      
       if (item.id === null) {
         item.id = id++;
         items.push(item);
@@ -109,20 +112,36 @@ angular.module('starter.services', [])
 .factory('GroceryItems', function() {
   var items = [];
   var id = 0;
+  var counter =0;
 
   return {
     all: function() {
       return items;
     },
     add: function (name) {
-      var item = { id: id++, name: name };
+      var item = { id: id++, name: name, checked: false};
       items.push(item);
+      counter = counter +1;
+      alert(counter);
     },
     remove: function(item) {
       items.splice(items.indexOf(item), 1);
+      counter = counter -1;
+    },
+    checkoff: function(parsedItem){
+      //window.alert(parsedItem.name);
+      //alert(counter);
+      for (var i = 0; i < counter; i++) { 
+          window.alert(items[i].name);
+        if(items[i].name==parsedItem.name)
+        {
+          items[i].checked = true;
+        }
+      };
     }
   };
 })
+
 
 .factory('Bluetooth', function($q, $interval) {
   var poll;
