@@ -2,7 +2,7 @@
 
 angular.module('starter.services', [])
 
-.factory('CartItems', function() {
+.factory('CartItems', function($http) {
   var items = [];
   var id = 0;
 
@@ -30,11 +30,30 @@ angular.module('starter.services', [])
       return items;
     },
     add: function (barcode) {
-      // temporary, search server with barcode
-      var item = { id: null, barcode: barcode, name: barcode, quantity: 1, price: 1 };
-      item.id = id++;
-      items.push(item);
-      addToTotal(item);
+      var itemFound = false;
+
+      // check if item exists in cart
+      angular.forEach(items, function(item) {
+        if (item.barcode === barcode) {
+          removeFromTotal(item);
+          item.quantity++;
+          addToTotal(item);
+          itemFound = true;
+        }
+      });
+
+      // add an item if not in cart
+      if (!itemFound) {
+        $http.get('https://ucart-server.herokuapp.com/api/v1/products', 
+          { params : { barcode: barcode } })
+        .success(function(data) {
+          var item = data;
+          item.id = id++;
+          item.quantity = 1;
+          items.push(item);
+          addToTotal(item);
+        });
+      }
     },
     addInput: function(item) {
       if (item.id === null) {
