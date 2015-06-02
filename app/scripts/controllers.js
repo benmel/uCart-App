@@ -6,8 +6,6 @@ angular.module('starter.controllers', [])
 	$scope.state = 'scanning';
 
 	$scope.items = CartItems.all();
-	$scope.item = { id: null, name: null, quantity: null, price: null };
-	
 	$scope.subtotal = CartItems.getSubtotal;
 	$scope.tax = CartItems.getTax;
 	$scope.total = CartItems.getTotal;
@@ -18,27 +16,15 @@ angular.module('starter.controllers', [])
 
 	$scope.barcode = { input: null };
 	
-	// temporary
 	$scope.add = function() {
-		var item = angular.copy($scope.item);
-	  if (item.name && item.quantity > 0 && item.price > 0) {
-			CartItems.addInput(item);
-			$scope.item = { id: null, name: null, quantity: null, price: null };
-		} else {
-			window.alert('Item not valid');
+		if ($scope.barcode.input) {
+			CartItems.add($scope.barcode.input);
+			$scope.barcode.input = null;
 		}
 	};
 
 	$scope.remove = function(item) {
 		CartItems.remove(item);
-	};
-
-	// temporary
-	$scope.addTest = function() {
-		if ($scope.barcode.input) {
-			CartItems.add($scope.barcode.input);
-			$scope.barcode.input = null;
-		}
 	};
 
 	$scope.startScanning = function() {
