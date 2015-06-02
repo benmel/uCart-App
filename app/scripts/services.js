@@ -48,10 +48,12 @@ angular.module('starter.services', [])
           { params : { barcode: barcode } })
         .success(function(data) {
           var item = data;
-          item.id = id++;
-          item.quantity = 1;
-          items.push(item);
-          addToTotal(item);
+          if (item.name && item.price && item.barcode) {
+            item.id = id++;
+            item.quantity = 1;
+            items.push(item);
+            addToTotal(item);
+          }
         });
       }
     },
@@ -218,7 +220,7 @@ angular.module('starter.services', [])
   function startRead() {
     bluetoothSerial.subscribe('\n',
       function(data) {
-        readCallback(data);
+        readCallback(data.trim());
       },
       function() {
       }
