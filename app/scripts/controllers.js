@@ -97,9 +97,6 @@ angular.module('starter.controllers', [])
     $scope.input.query = '';
   };
 
-  $scope.changeIcon = function() {
-  	alert('yes');
-  }
 
 })
 
