@@ -2,7 +2,7 @@
 
 angular.module('starter.services', [])
 
-.factory('CartItems', function(GroceryItems) {
+.factory('CartItems', function($http, GroceryItems) {
   var items = [];
   var id = 0;
 
@@ -30,35 +30,36 @@ angular.module('starter.services', [])
       return items;
     },
     add: function (barcode) {
-      // temporary, search server with barcode
-      var item = { id: null, barcode: barcode, name: barcode, quantity: 1, price: 1 };
-      item.id = id++;
-      items.push(item);
-      addToTotal(item);
-    },
-    addInput: function(item) {
-      
-      GroceryItems.addCheckOff(item);
-      
-      if (item.id === null) {
-        item.id = id++;
-        items.push(item);
-        addToTotal(item);
-      } else {
-        for (var i in items) {
-          if (items[i].id === item.id) {
-            removeFromTotal(items[i]);
-            items[i] = item;
-            addToTotal(item);
-          }
+      var itemFound = false;
+
+      // check if item exists in cart
+      angular.forEach(items, function(item) {
+        if (item.barcode === barcode) {
+          removeFromTotal(item);
+          item.quantity++;
+          addToTotal(item);
+          itemFound = true;
         }
+      });
+
+      // add an item if not in cart
+      if (!itemFound) {
+        $http.get('https://ucart-server.herokuapp.com/api/v1/products', 
+          { params : { barcode: barcode } })
+        .success(function(data) {
+          var item = data;
+          if (item.name && item.price && item.barcode) {
+            item.id = id++;
+            item.quantity = 1;
+            items.push(item);
+            addToTotal(item);
+            GroceryItems.addCheckOff(item);
+          }
+        });
       }
     },
     remove: function(item) {
-
       GroceryItems.removeCheckOff(item);
-
-
       removeFromTotal(item);
       items.splice(items.indexOf(item), 1);
     },
@@ -123,7 +124,6 @@ angular.module('starter.services', [])
       return items;
     },
     add: function (name) {
-
       checkDuplicate=false;
       var item = { id: id++, name: name, checked: false};
       for (var i in items) {
@@ -134,18 +134,14 @@ angular.module('starter.services', [])
       }
       if (checkDuplicate===false)
       {
-      items.push(item);
-    }
-
- 
+        items.push(item);
+      }
     },
     remove: function(item) {
       items.splice(items.indexOf(item), 1);
 
     },
     addCheckOff: function(parsedItem){
-      //window.alert(parsedItem.name);
-      //alert(counter);
       for (var i in items) { 
         if(items[i].name===parsedItem.name)
         {
@@ -163,7 +159,6 @@ angular.module('starter.services', [])
     }
   };
 })
-
 
 .factory('Bluetooth', function($q, $interval) {
   var poll;
@@ -240,7 +235,7 @@ angular.module('starter.services', [])
   function startRead() {
     bluetoothSerial.subscribe('\n',
       function(data) {
-        readCallback(data);
+        readCallback(data.trim());
       },
       function() {
       }
