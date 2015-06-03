@@ -2,7 +2,7 @@
 
 angular.module('starter.services', [])
 
-.factory('CartItems', function() {
+.factory('CartItems', function(GroceryItems) {
   var items = [];
   var id = 0;
 
@@ -37,6 +37,9 @@ angular.module('starter.services', [])
       addToTotal(item);
     },
     addInput: function(item) {
+      
+      GroceryItems.addCheckOff(item);
+      
       if (item.id === null) {
         item.id = id++;
         items.push(item);
@@ -52,6 +55,10 @@ angular.module('starter.services', [])
       }
     },
     remove: function(item) {
+
+      GroceryItems.removeCheckOff(item);
+
+
       removeFromTotal(item);
       items.splice(items.indexOf(item), 1);
     },
@@ -109,20 +116,54 @@ angular.module('starter.services', [])
 .factory('GroceryItems', function() {
   var items = [];
   var id = 0;
+  var checkDuplicate = false;
 
   return {
     all: function() {
       return items;
     },
     add: function (name) {
-      var item = { id: id++, name: name };
+
+      checkDuplicate=false;
+      var item = { id: id++, name: name, checked: false};
+      for (var i in items) {
+        if(items[i].name===item.name)
+        {
+          checkDuplicate= true;
+        }
+      }
+      if (checkDuplicate===false)
+      {
       items.push(item);
+    }
+
+ 
     },
     remove: function(item) {
       items.splice(items.indexOf(item), 1);
+
+    },
+    addCheckOff: function(parsedItem){
+      //window.alert(parsedItem.name);
+      //alert(counter);
+      for (var i in items) { 
+        if(items[i].name===parsedItem.name)
+        {
+          items[i].checked = true;
+        }
+      }
+    },
+    removeCheckOff: function(parsedItem){
+      for (var i in items) {
+        if(items[i].name===parsedItem.name)
+        {
+          items[i].checked = false;
+        }
+      }
     }
   };
 })
+
 
 .factory('Bluetooth', function($q, $interval) {
   var poll;

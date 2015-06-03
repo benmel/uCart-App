@@ -66,14 +66,25 @@ angular.module('starter.controllers', [])
 	});
 })
 
-.controller('ListCtrl', function($scope, $http, GroceryItems) {
-  $scope.input = { query: '' };
+
+.controller('ListCtrl', function($scope, $http, CartItems, GroceryItems) {
+
+
+	
+
+
+
   $scope.items = GroceryItems.all();
   
-  $http.get('https://ucart-server.herokuapp.com/api/v1/products').success(function(data) {
+  $http.get('https://ucart-server.herokuapp.com/api/v1/products')
+  .success(function(data) {
     $scope.list = data;
   });
 
+  
+  $scope.cartItems = CartItems.all();
+
+  
   $scope.add = function(name) {
     GroceryItems.add(name);
   };
@@ -85,6 +96,8 @@ angular.module('starter.controllers', [])
   $scope.clearQuery = function() {
     $scope.input.query = '';
   };
+
+
 })
 
 .controller('CouponsCtrl', function($scope,$http,GroceryItems) {
