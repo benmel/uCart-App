@@ -2,7 +2,7 @@
 	<ion-content>
 		<ion-list>
 			<ion-item class ="item item-icon-left item-icon-right" ng-repeat="item in items">
-				<i class="icon ion-help-circled"></i>
+				<i ng-class ="item.checked ? 'icon ion-ios-checkmark-outline' : 'icon ion-ios-circle-outline'"></i>
 				<span class="list-added">{{item.name}}</span>
 				<i class="icon ion-minus" ng-click="remove(item)"></i>	
 			</ion-item>

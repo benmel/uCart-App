@@ -2,7 +2,7 @@
 
 angular.module('starter.services', [])
 
-.factory('CartItems', function($http) {
+.factory('CartItems', function($http, GroceryItems) {
   var items = [];
   var id = 0;
 
@@ -53,26 +53,13 @@ angular.module('starter.services', [])
             item.quantity = 1;
             items.push(item);
             addToTotal(item);
+            GroceryItems.addCheckOff(item);
           }
         });
       }
     },
-    addInput: function(item) {
-      if (item.id === null) {
-        item.id = id++;
-        items.push(item);
-        addToTotal(item);
-      } else {
-        for (var i in items) {
-          if (items[i].id === item.id) {
-            removeFromTotal(items[i]);
-            items[i] = item;
-            addToTotal(item);
-          }
-        }
-      }
-    },
     remove: function(item) {
+      GroceryItems.removeCheckOff(item);
       removeFromTotal(item);
       items.splice(items.indexOf(item), 1);
     },
@@ -130,17 +117,45 @@ angular.module('starter.services', [])
 .factory('GroceryItems', function() {
   var items = [];
   var id = 0;
+  var checkDuplicate = false;
 
   return {
     all: function() {
       return items;
     },
     add: function (name) {
-      var item = { id: id++, name: name };
-      items.push(item);
+      checkDuplicate=false;
+      var item = { id: id++, name: name, checked: false};
+      for (var i in items) {
+        if(items[i].name===item.name)
+        {
+          checkDuplicate= true;
+        }
+      }
+      if (checkDuplicate===false)
+      {
+        items.push(item);
+      }
     },
     remove: function(item) {
       items.splice(items.indexOf(item), 1);
+
+    },
+    addCheckOff: function(parsedItem){
+      for (var i in items) { 
+        if(items[i].name===parsedItem.name)
+        {
+          items[i].checked = true;
+        }
+      }
+    },
+    removeCheckOff: function(parsedItem){
+      for (var i in items) {
+        if(items[i].name===parsedItem.name)
+        {
+          items[i].checked = false;
+        }
+      }
     }
   };
 })
