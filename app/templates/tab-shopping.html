@@ -3,6 +3,7 @@
     <ion-list>
       
       <div ng-switch on="state">
+        
         <div ng-switch-when="scanning">
           <ion-item>
             <div class="row">
@@ -40,13 +41,14 @@
         </ion-item>
       </div>
       
+
       <div ng-switch-when="paying">
         <ion-item>
           <div class="row">
             <div class="col col-33">
               <button class="button button-block button-positive" ng-click="startScanning()">Back</button>
-              <button class="button button-block button-positive" ng-show="showPaymentOptions()">Pay with card</button>
-              <button class="button button-block button-positive" ng-show="showPaymentOptions()">Pay with cash</button>
+              <button class="button button-block button-positive" ng-click="creditCardPayment()">Pay with card</button>
+              <button class="button button-block button-positive" ng-click="cashPayment()">Pay with cash</button>
             </div>
           </div>
         </ion-item>
@@ -68,7 +70,41 @@
           </div>
         </div>
       </div> 
+
+      <div ng-switch-when="card">
+        <ion-item>
+          <div class="row">
+            <div class="col col-33">
+              
+              <h> please swipe your card</h>
+
+
+              <button class="button button-block button-positive" ng-click="startScanning()">Back</button>
+
+            </div>
+          </div>
+        </ion-item>
+      </div> 
+
+      <div ng-switch-when="cash">
+        <ion-item>
+          <div class="row">
+            <div class="col col-33">
+              
+              <p> please pay for your items at the cash checkout station</p>
+              
+              <button class="button button-block button-positive" ng-click="startScanning()">Back</button>
+
+            </div>
+          </div>
+        </ion-item>
+      </div> 
+
+
+
     </div>
+
+
 
     <div class="item">
       Subtotal: {{ subtotal().toFixed(2) }}<br>

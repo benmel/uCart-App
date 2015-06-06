@@ -5,6 +5,11 @@ angular.module('starter.controllers', [])
 .controller('ShoppingCtrl', function($scope, CartItems, IdVerification, Bluetooth) {
 	$scope.state = 'scanning';
 
+	$scope.firstName = "";
+	$scope.lastName = "";
+	$scope.cardNumber ="";
+
+
 	$scope.items = CartItems.all();
 	$scope.subtotal = CartItems.getSubtotal;
 	$scope.tax = CartItems.getTax;
@@ -35,19 +40,69 @@ angular.module('starter.controllers', [])
 		$scope.state = 'paying';
 	};
 
+	$scope.creditCardPayment =  function() {
+		$scope.state = 'card';
+	};
+
+	$scope.cashPayment =  function() {
+		$scope.state = 'card';
+	};
+
 	$scope.verifyId = function() {
 		if (!IdVerification.verifyId($scope.code.input)) {
 			$scope.code.input = null;
 			window.alert('Incorrect code');
 		}
 	};
-
+	
 	$scope.$on('$ionicView.loaded', function() {
     var readBarcode = function(barcode) {
+
+    var inputLength = barcode.length;
+
+    if (inputLength<60)
+    {
     	CartItems.add(barcode);
+    }
+    else
+    {
+    	if($scope.state = 'card')
+    	{
+		    InputLength = barcode.length;
+		alert(barcode);
+		    var lastNameStartIndex = barcode.indexOf("^");
+			lastNameStartIndex= lastNameStartIndex+1;
+
+		    var modifiedEnding= InputLength-lastNameStartIndex;
+			var headTrimmed = barcode.substring(lastNameStartIndex,InputLength-lastNameStartIndex);
+
+			var firstNameStartIndex = headTrimmed.indexOf("/");
+			var firstNameStartIndexPlus1 = firstNameStartIndex+1; 
+			var firstNameEndIndex = headTrimmed.indexOf("^");
+			var cardNumberStartIndex = headTrimmed.indexOf(";");
+			cardNumberStartIndex= cardNumberStartIndex+1;
+			var cardNumberEndingIndex = cardNumberStartIndex+16;
+			var lastName = headTrimmed.substring(0, firstNameStartIndex);
+		alert(lastName);
+			var firstName = headTrimmed.substring(firstNameStartIndexPlus1,firstNameEndIndex);
+		alert(firstName);  	
+			var cardNumber = headTrimmed.substring(cardNumberStartIndex,cardNumberEndingIndex)
+		alert(cardNumber);
+		    var cardNumberLF= "XXXX-XXXX-XXXX-XXXX-"+cardNumber.substring(12,16);
+		    cardNumber = 0;
+		alert(cardNumberLF);
+
+		$scope.firstName = firstName;
+		$scope.lastName = lastName;
+		$scope.cardNumber = cardNumberLF;
+		}
+    	
+    }
+
     };
     Bluetooth.setReadCallback(readBarcode);
 	});
+
 
 	$scope.$on('$ionicView.enter', function() {
     Bluetooth.startConnectPoll();
