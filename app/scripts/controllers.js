@@ -101,46 +101,57 @@ angular.module('starter.controllers', [])
   $scope.input = { query: '' };
   $scope.image = null;
   $scope.imageName = null;
+  $scope.noAisle = false;
   
   $http.get('https://ucart-server.herokuapp.com/api/v1/products').success(function(data) {
   	$scope.list = data;
   });
 
   $scope.locate = function(name, aisle) {
-  	var aisles = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'Other'];
+  	var aisles = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
   	if (aisles.indexOf(aisle) >= 0) {
   		$scope.imageName = name;
+  		$scope.noAisle = false;
   	} else {
-  		$scope.imageName = null;
+  		if (aisle === 'Other') {
+  			$scope.imageName = name;
+  		} else {
+	  		$scope.imageName = null;
+  		}
+  		$scope.noAisle = true;
+  	}
+
+  	if (aisle === 'Other') {
+  		$scope.imageName = name;
   	}
 
   	switch(aisle) {
   		case 'A':
-  			$scope.image = 'http://i.imgur.com/0ARN5FT.png';
+  			$scope.image = 'images/A.png';
   			break;
   		case 'B':
-  			$scope.image = 'http://i.imgur.com/w32wbIw.png';
+  			$scope.image = 'images/B.png';
   			break;
   		case 'C':
-  			$scope.image = 'http://i.imgur.com/IqlLNhf.png';
+  			$scope.image = 'images/C.png';
   			break;
   		case 'D':
-  			$scope.image = 'http://i.imgur.com/4k0qgd7.png';
+  			$scope.image = 'images/D.png';
   			break;
   		case 'E':
-  			$scope.image = 'http://i.imgur.com/E4aaiZg.png';
+  			$scope.image = 'images/E.png';
   			break;
   		case 'F':
-  			$scope.image = 'http://i.imgur.com/ZZ7u2mB.png';
+  			$scope.image = 'images/F.png';
   			break;
   		case 'G':
-  			$scope.image = 'http://i.imgur.com/36itAQs.png';
+  			$scope.image = 'images/G.png';
   			break;
   		case 'Other':
-  			$scope.image = 'http://i.imgur.com/ImnRDDc.png';
+  			$scope.image = null;
   			break;
   		default:
-  			$scope.image = null;	
+  			$scope.image = null;
   	}
   };
 
@@ -148,5 +159,6 @@ angular.module('starter.controllers', [])
     $scope.input.query = '';
     $scope.image = null;
     $scope.imageName = null;
+    $scope.noAisle = false;
   };	
 });

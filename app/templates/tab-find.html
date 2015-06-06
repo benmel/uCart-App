@@ -21,6 +21,7 @@
 <ion-view view-title="Find Product" class="rightpane">
 	<ion-content>
 		<h5>{{imageName}}</h5>
-		<img ng-if="image" ng-src="{{image}}" class="aisle">		
+		<img ng-if="image" ng-src="{{image}}" class="aisle">
+		<p ng-if="noAisle">No location information available</p>		
 	</ion-content>
 </ion-view>
