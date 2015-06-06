@@ -1,4 +1,44 @@
-<ion-view view-title="Find Product">
-  <ion-content>
-  </ion-content>
-</ion-view>
+<style>
+
+h5{
+    text-align: center;
+  }
+
+
+</style>
+
+	<ion-view view-title="Find Product" class="leftpane">
+		<div class="bar bar-subheader item-input-inset">
+			<label class="item-input-wrapper">
+				<i class="icon ion-ios-search placeholder-icon"></i>
+				<input type="search" placeholder="Search" ng-model ="input.query">
+			</label>
+			<button class="button button-clear" ng-click="clearQuery()">
+				Clear
+			</button>
+		</div>
+		<ion-content class="has-subheader">
+			<ion-list>
+				<ion-item class ="item item-icon-right" ng-repeat="item in list | filter: input.query | orderBy:'name'">
+					<span class="list-search">{{item.name}}</span>
+					<i class="icon ion-android-pin" ng-click="locate(item.name,item.aisle)"></i>	
+		    </ion-item>
+	    </ion-list>
+	  </ion-content>
+	</ion-view>
+
+
+
+
+<ion-view view-title="Find Product" class="rightpane">
+	
+		<ion-content>
+
+		<h5>{{imgName}}</h5>
+		<p><img ng-if="image" ng-src="{{image}}" height="700" width="500"/></p>
+
+
+			
+		</ion-content>
+	</ion-view>
+

@@ -103,33 +103,6 @@ angular.module('starter.controllers', [])
 
 
 
-	// $scope.coupons = [{ name: 'Banana', newPrice: 3.29, oldPrice: 4.49, aisle: 'A', img: 'http://i.imgur.com/N8wRROq.jpg', category: 'Fruits' },
-	// 				  { name: 'Chocolate', newPrice: 3.19, oldPrice: 5.39, aisle: 'B', img: 'http://placehold.it/280x150' , category: 'Dairy'},
-	// 				  {name: 'Milk', newPrice: 3.19, oldPrice: 5.39, aisle: 'C', img: 'http://placehold.it/280x150' , category: 'Dairy'},
-	// 				  { name: 'Orange', newPrice: 2.29, oldPrice: 4.40, aisle: 'D', img: 'http://placehold.it/280x150' , category: 'Fruits'},
-	// 				  { name: 'Spinach', newPrice: 2.29, oldPrice: 4.40, aisle: 'E', img: 'http://placehold.it/280x150' , category: 'Vegetables'},
-	// 				  { name: 'Mango', newPrice: 2.29, oldPrice: 4.40, aisle: 'D', img: 'http://placehold.it/280x150' , category: 'Fruits'},
-	// 				  { name: 'Butter', newPrice: 2.29, oldPrice: 4.40, aisle: 'D', img: 'http://placehold.it/280x150' , category: 'Dairy'},
-	// 				  { name: 'Apple', newPrice: 2.29, oldPrice: 4.40, aisle: 'D', img: 'http://i.imgur.com/aKPXR84.jpg' , category: 'Fruits'},
-	// 				  { name: 'Cheese', newPrice: 2.29, oldPrice: 4.40, aisle: 'D', img: 'http://placehold.it/280x150' , category: 'Dairy'},
-	// 				  { name: 'Green Peas', newPrice: 2.29, oldPrice: 4.40, aisle: 'D', img: 'http://placehold.it/280x150' , category: 'Vegetables'},
-	// 				  { name: 'Strawberry', newPrice: 2.29, oldPrice: 4.40, aisle: 'D', img: 'http://placehold.it/280x150' , category: 'Fruits'},
-	// 				  { name: 'Papaya', newPrice: 2.29, oldPrice: 4.40, aisle: 'D', img: 'http://placehold.it/280x150' , category: 'Fruits'},
-					  
-	// 				  { name: 'Carrots', newPrice: 2.29, oldPrice: 4.40, aisle: 'D', img: 'http://placehold.it/280x150' , category: 'Vegetables'},
-	// 				  { name: 'Cabbage', newPrice: 2.29, oldPrice: 4.40, aisle: 'D', img: 'http://placehold.it/280x150' , category: 'Vegetables'},
-	// 				  { name: 'Yogurt', newPrice: 2.29, oldPrice: 4.40, aisle: 'D', img: 'http://i.imgur.com/xmVAt52.png' , category: 'Dairy'},
-	// 				  { name: 'Eggs', newPrice: 2.29, oldPrice: 4.40, aisle: 'D', img: 'http://i.imgur.com/BOXDlvY.jpg' , category: 'Dairy'},
-
-	// 				  { name: 'Mushrooms', newPrice: 2.29, oldPrice: 4.40, aisle: 'D', img: 'http://placehold.it/280x150' , category: 'Vegetables'}
-	// 				  ];
-
-	// $scope.categories=['Vegetables','Fruits','Breakfast','Dairy'];
-
-
-
-
-
 
 
 	
@@ -138,6 +111,71 @@ angular.module('starter.controllers', [])
 
 
 
-.controller('FindCtrl', function($scope) {
-	$scope = null;
+.controller('FindCtrl', function($scope, $http) {
+  $scope.input = { query: '' };
+  // $scope.interface = 'default';
+  $scope.image = null;
+  $scope.imgName=null;
+  
+  $http.get('https://ucart-server.herokuapp.com/api/v1/products').success(function(data) {
+  $scope.list = data;
+  });
+
+
+
+    $scope.locate = function(name,aisle) {
+
+    	
+
+    	if (aisle === 'A') {
+    		$scope.image = 'http://i.imgur.com/0ARN5FT.png';
+    		$scope.imgName=name;
+
+    	} 
+    	else if (aisle === 'B') {
+    		$scope.image = 'http://i.imgur.com/w32wbIw.png';
+    		$scope.imgName=name;
+
+		}
+		else if (aisle ==='C') {
+			$scope.image='http://i.imgur.com/IqlLNhf.png';
+			$scope.imgName=name;
+		}
+		else if (aisle==='D'){
+			$scope.image='http://i.imgur.com/4k0qgd7.png';
+			$scope.imgName=name;
+		}
+		else if(aisle==='E'){
+			$scope.image='http://i.imgur.com/E4aaiZg.png';
+			$scope.imgName=name;
+		}
+		else if(aisle==='F'){
+			$scope.image='http://i.imgur.com/ZZ7u2mB.png';
+			$scope.imgName=name;
+		}
+		else if(aisle==='G'){
+			$scope.image='http://i.imgur.com/36itAQs.png';
+			$scope.imgName=name;
+		}
+		else if(aisle==='Other'){
+			$scope.image='http://i.imgur.com/ImnRDDc.png';
+			$scope.imgName=name;
+		}
+
+		
+
+
+
+
+  };
+
+
+
+  $scope.clearQuery = function() {
+    $scope.input.query = '';
+    $scope.image=null;
+    $scope.imgName=null;
+  };
+
+	
 });
