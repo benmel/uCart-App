@@ -6,8 +6,6 @@ angular.module('starter.controllers', [])
 	$scope.state = 'scanning';
 
 	$scope.items = CartItems.all();
-	$scope.item = { id: null, name: null, quantity: null, price: null };
-	
 	$scope.subtotal = CartItems.getSubtotal;
 	$scope.tax = CartItems.getTax;
 	$scope.total = CartItems.getTotal;
@@ -15,14 +13,13 @@ angular.module('starter.controllers', [])
 	$scope.showVerificationNeeded = IdVerification.showVerificationNeeded;
 	$scope.showPaymentOptions = IdVerification.showPaymentOptions;
 	$scope.code = { input: null };
+
+	$scope.barcode = { input: null };
 	
 	$scope.add = function() {
-		var item = angular.copy($scope.item);
-	  if (item.name && item.quantity > 0 && item.price > 0) {
-			CartItems.addInput(item);
-			$scope.item = { id: null, name: null, quantity: null, price: null };
-		} else {
-			window.alert('Item not valid');
+		if ($scope.barcode.input) {
+			CartItems.add($scope.barcode.input);
+			$scope.barcode.input = null;
 		}
 	};
 
@@ -63,17 +60,20 @@ angular.module('starter.controllers', [])
 	$scope.$on('$ionicView.unloaded', function() {
     Bluetooth.stopRead();
     Bluetooth.stopConnectPoll();
+    Bluetooth.disconnect();
 	});
 })
 
-.controller('ListCtrl', function($scope, $http, GroceryItems) {
-  $scope.input = { query: '' };
+.controller('ListCtrl', function($scope, $http, CartItems, GroceryItems) {
   $scope.items = GroceryItems.all();
   
-  $http.get('https://ucart-server.herokuapp.com/api/v1/products').success(function(data) {
+  $http.get('https://ucart-server.herokuapp.com/api/v1/products')
+  .success(function(data) {
     $scope.list = data;
   });
 
+  $scope.cartItems = CartItems.all();
+  
   $scope.add = function(name) {
     GroceryItems.add(name);
   };
@@ -87,18 +87,14 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('CouponsCtrl', function($scope,$http,GroceryItems) {
+.controller('CouponsCtrl', function($scope, $http, GroceryItems) {
 	$http.get('https://ucart-server.herokuapp.com/api/v1/coupons').success(function(data){
 		$scope.coupons=data;
 	});
 
-
 	$scope.addToGrocery=function(item){
 		GroceryItems.add(item.name);
-
-
 	};
-
 })
 
 
