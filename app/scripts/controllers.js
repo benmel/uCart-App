@@ -97,81 +97,56 @@ angular.module('starter.controllers', [])
 	};
 })
 
-
-
-
-
-	
-
-
-
-
-
 .controller('FindCtrl', function($scope, $http) {
   $scope.input = { query: '' };
-  // $scope.interface = 'default';
   $scope.image = null;
-  $scope.imgName=null;
+  $scope.imageName = null;
   
   $http.get('https://ucart-server.herokuapp.com/api/v1/products').success(function(data) {
-  $scope.list = data;
+  	$scope.list = data;
   });
 
+  $scope.locate = function(name, aisle) {
+  	var aisles = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'Other'];
+  	if (aisles.indexOf(aisle) >= 0) {
+  		$scope.imageName = name;
+  	} else {
+  		$scope.imageName = null;
+  	}
 
-
-    $scope.locate = function(name,aisle) {
-
-    	
-
-    	if (aisle === 'A') {
-    		$scope.image = 'http://i.imgur.com/0ARN5FT.png';
-    		$scope.imgName=name;
-
-    	} 
-    	else if (aisle === 'B') {
-    		$scope.image = 'http://i.imgur.com/w32wbIw.png';
-    		$scope.imgName=name;
-
-		}
-		else if (aisle ==='C') {
-			$scope.image='http://i.imgur.com/IqlLNhf.png';
-			$scope.imgName=name;
-		}
-		else if (aisle==='D'){
-			$scope.image='http://i.imgur.com/4k0qgd7.png';
-			$scope.imgName=name;
-		}
-		else if(aisle==='E'){
-			$scope.image='http://i.imgur.com/E4aaiZg.png';
-			$scope.imgName=name;
-		}
-		else if(aisle==='F'){
-			$scope.image='http://i.imgur.com/ZZ7u2mB.png';
-			$scope.imgName=name;
-		}
-		else if(aisle==='G'){
-			$scope.image='http://i.imgur.com/36itAQs.png';
-			$scope.imgName=name;
-		}
-		else if(aisle==='Other'){
-			$scope.image='http://i.imgur.com/ImnRDDc.png';
-			$scope.imgName=name;
-		}
-
-		
-
-
-
-
+  	switch(aisle) {
+  		case 'A':
+  			$scope.image = 'http://i.imgur.com/0ARN5FT.png';
+  			break;
+  		case 'B':
+  			$scope.image = 'http://i.imgur.com/w32wbIw.png';
+  			break;
+  		case 'C':
+  			$scope.image = 'http://i.imgur.com/IqlLNhf.png';
+  			break;
+  		case 'D':
+  			$scope.image = 'http://i.imgur.com/4k0qgd7.png';
+  			break;
+  		case 'E':
+  			$scope.image = 'http://i.imgur.com/E4aaiZg.png';
+  			break;
+  		case 'F':
+  			$scope.image = 'http://i.imgur.com/ZZ7u2mB.png';
+  			break;
+  		case 'G':
+  			$scope.image = 'http://i.imgur.com/36itAQs.png';
+  			break;
+  		case 'Other':
+  			$scope.image = 'http://i.imgur.com/ImnRDDc.png';
+  			break;
+  		default:
+  			$scope.image = null;	
+  	}
   };
-
-
 
   $scope.clearQuery = function() {
     $scope.input.query = '';
-    $scope.image=null;
-    $scope.imgName=null;
-  };
-
-	
+    $scope.image = null;
+    $scope.imageName = null;
+  };	
 });
