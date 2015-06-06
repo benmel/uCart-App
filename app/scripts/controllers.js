@@ -60,6 +60,7 @@ angular.module('starter.controllers', [])
 	$scope.$on('$ionicView.unloaded', function() {
     Bluetooth.stopRead();
     Bluetooth.stopConnectPoll();
+    Bluetooth.disconnect();
 	});
 })
 

@@ -265,6 +265,10 @@ angular.module('starter.services', [])
 
     stopRead: function() {
       stopRead();
+    },
+
+    disconnect: function() {
+      bluetoothSerial.disconnect();
     }
   };
 });
