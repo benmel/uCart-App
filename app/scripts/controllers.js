@@ -45,7 +45,7 @@ angular.module('starter.controllers', [])
 	};
 
 	$scope.cashPayment =  function() {
-		$scope.state = 'card';
+		$scope.state = 'cash';
 	};
 
 	$scope.verifyId = function() {
@@ -66,15 +66,15 @@ angular.module('starter.controllers', [])
     }
     else
     {
-    	if($scope.state = 'card')
+    	if($scope.state === 'card')
     	{
-		    InputLength = barcode.length;
-		alert(barcode);
+		    inputLength = barcode.length;
+		window.alert(barcode);
 		    var lastNameStartIndex = barcode.indexOf("^");
 			lastNameStartIndex= lastNameStartIndex+1;
 
-		    var modifiedEnding= InputLength-lastNameStartIndex;
-			var headTrimmed = barcode.substring(lastNameStartIndex,InputLength-lastNameStartIndex);
+		    var modifiedEnding= inputLength-lastNameStartIndex;
+			var headTrimmed = barcode.substring(lastNameStartIndex,inputLength-lastNameStartIndex);
 
 			var firstNameStartIndex = headTrimmed.indexOf("/");
 			var firstNameStartIndexPlus1 = firstNameStartIndex+1; 
@@ -83,14 +83,14 @@ angular.module('starter.controllers', [])
 			cardNumberStartIndex= cardNumberStartIndex+1;
 			var cardNumberEndingIndex = cardNumberStartIndex+16;
 			var lastName = headTrimmed.substring(0, firstNameStartIndex);
-		alert(lastName);
+		window.alert(lastName);
 			var firstName = headTrimmed.substring(firstNameStartIndexPlus1,firstNameEndIndex);
-		alert(firstName);  	
-			var cardNumber = headTrimmed.substring(cardNumberStartIndex,cardNumberEndingIndex)
-		alert(cardNumber);
+		window.alert(firstName);  	
+			var cardNumber = headTrimmed.substring(cardNumberStartIndex,cardNumberEndingIndex);
+		window.alert(cardNumber);
 		    var cardNumberLF= "XXXX-XXXX-XXXX-XXXX-"+cardNumber.substring(12,16);
 		    cardNumber = 0;
-		alert(cardNumberLF);
+		window.alert(cardNumberLF);
 
 		$scope.firstName = firstName;
 		$scope.lastName = lastName;
