@@ -34,8 +34,8 @@ angular.module('starter.controllers', [])
 		IdVerification.reset();
 		GroceryItems.reset();
 		$scope.state = 'scanning';
-		$scope.cardData = { cardSwiped: false, firstName: CardInfo.getFirstName, lastName: CardInfo.getLastName, cardNumber: CardInfo.getCardNumber };
-
+		$scope.cardData.cardSwiped = false;
+		$scope.barcode.input = null;
 
 	};
 	$scope.startScanning = function() {

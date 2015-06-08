@@ -11,34 +11,21 @@ angular.module('starter.services', [])
   var total = 0;
 
   function addToTotal(item) {
-    var couponsList;
-    $http.get('https://ucart-server.herokuapp.com/api/v1/coupons').success(function(data){
-    couponsList=data;
-  });
-    var couponCheck = false;
-    var couponIndex =0;
-
-    for (var i in couponsList) {
-
-      if (couponsList[i].barcode === item.barcode)
-      {
-        couponCheck=true;
-        couponIndex= i;
-      }
+    if (item.coupon && item.coupon.price) {
+      subtotal += item.coupon.price * item.quantity;
     }
-
-    if (couponCheck === true)
-    {
-      subtotal += couponsList[couponIndex].coupon.price * item.quantity;
-    }
-    else
-    {
+    else {
       subtotal += item.price * item.quantity;
     }
+    updateTotal();
   }
 
   function removeFromTotal(item) {
-    subtotal -= item.price * item.quantity;
+    if (item.coupon && item.coupon.price) {
+      subtotal -= item.coupon.price * item.quantity;
+    } else {
+      subtotal -= item.price * item.quantity;
+    }
     updateTotal();
   }
 
@@ -95,7 +82,7 @@ angular.module('starter.services', [])
       return total;
     },
     reset:function() {
-      items = [];
+      items.length = 0;
       id = 0;
       subtotal = 0;
       tax = 0;
@@ -238,7 +225,7 @@ return {
       }
     },
     reset:function() {
-      items = [];
+      items.length = 0;
       id = 0;
       checkDuplicate = false;
     }
