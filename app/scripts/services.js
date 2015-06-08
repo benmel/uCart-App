@@ -135,7 +135,6 @@ angular.module('starter.services', [])
 })
 
 .factory('CardInfo', function() {
-  var items = [];
   var firstNameOutput ='';
   var lastNameOutput = '';
   var cardNumberOutput = '';
@@ -143,40 +142,23 @@ angular.module('starter.services', [])
 
 return {
     processInfo: function (input) {
+      var power = input.indexOf('^');
+      var secondPower = input.indexOf('^', power+1);
+      var slash = input.indexOf('/');
+      var semicolon = input.indexOf(';');
+      var equals = input.indexOf('=');
 
-      var idCheck = false;
+      var lastName = input.substring(power+1, slash);
+      var firstName = input.substring(slash+1, secondPower);
+      var cardNumber = input.substring(semicolon+1, equals);
+      var cardNumberDisplay = 'XXXX-XXXX-XXXX-' + cardNumber.substring(12, 16);
 
-      for (var i in items) {
-        if(items[i].category ==='Alcohol')
-        {
-          idCheck = true;
-
-        }
+      if (firstName && lastName && cardNumber) {
+        firstNameOutput = firstName;
+        lastNameOutput = lastName;
+        cardNumberOutput = cardNumberDisplay;
+        swipeCheck = true;
       }
-      if (idCheck ===false) {
-
-        var power = input.indexOf('^');
-        var secondPower = input.indexOf('^', power+1);
-        var slash = input.indexOf('/');
-        var semicolon = input.indexOf(';');
-        var equals = input.indexOf('=');
-
-        var lastName = input.substring(power+1, slash);
-        var firstName = input.substring(slash+1, secondPower);
-        var cardNumber = input.substring(semicolon+1, equals);
-        var cardNumberDisplay = 'XXXX-XXXX-XXXX-' + cardNumber.substring(12, 16);
-
-        if ( firstName && lastName && cardNumber) {
-          firstNameOutput = firstName;
-          lastNameOutput = lastName;
-          cardNumberOutput = cardNumberDisplay;
-          swipeCheck = true;
-        }
-        }
-        else
-        {
-          window.alert('Need Id Verification');
-        } 
     },
     getFirstName: function() {
       return firstNameOutput;

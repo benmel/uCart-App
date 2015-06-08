@@ -2,7 +2,7 @@
 
 angular.module('starter.controllers', [])
 
-.controller('ShoppingCtrl', function($scope, CartItems, CardInfo, IdVerification,GroceryItems, Bluetooth) {
+.controller('ShoppingCtrl', function($scope, CartItems, CardInfo, IdVerification, GroceryItems, Bluetooth) {
 	$scope.state = 'scanning';
 	$scope.cardData = { cardSwiped: false, firstName: CardInfo.getFirstName, lastName: CardInfo.getLastName, cardNumber: CardInfo.getCardNumber };
 
@@ -36,14 +36,21 @@ angular.module('starter.controllers', [])
 		$scope.state = 'scanning';
 		$scope.cardData.cardSwiped = false;
 		$scope.barcode.input = null;
-
+		$scope.code.input = null;
 	};
+	
 	$scope.startScanning = function() {
 		$scope.state = 'scanning';
 		window.scrollTo(0, 0);
 	};
 
 	$scope.startPaying = function() {
+		IdVerification.setIdVerificationNeeded(false);
+		angular.forEach($scope.items, function(item) {
+      if (item.category === 'Alcohol') {
+      	IdVerification.setIdVerificationNeeded(true);
+      }
+    });
 		$scope.state = 'paying';
 		window.scrollTo(0, 0);
 	};

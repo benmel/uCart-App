@@ -48,8 +48,8 @@
         <ion-item>
           <div class="row">
             <div class="col col-33">
-              <button class="button button-block button-positive" ng-click="creditCardPayment()">Pay with card</button>
-              <button class="button button-block button-positive" ng-click="cashPayment()">Pay with cash</button>
+              <button class="button button-block button-positive" ng-show="!showVerificationNeeded()" ng-click="creditCardPayment()">Pay with card</button>
+              <button class="button button-block button-positive" ng-show="!showVerificationNeeded()" ng-click="cashPayment()">Pay with cash</button>
               <button class="button button-block button-positive" ng-click="startScanning()">Back</button>
             </div>
           </div>
