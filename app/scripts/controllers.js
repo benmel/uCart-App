@@ -5,9 +5,9 @@ angular.module('starter.controllers', [])
 .controller('ShoppingCtrl', function($scope, CartItems, IdVerification, Bluetooth) {
 	$scope.state = 'scanning';
 
-	$scope.firstName = "";
-	$scope.lastName = "";
-	$scope.cardNumber ="";
+	$scope.firstName = '';
+	$scope.lastName = '';
+	$scope.cardNumber = '';
 
 
 	$scope.items = CartItems.all();
@@ -68,34 +68,28 @@ angular.module('starter.controllers', [])
     {
     	if($scope.state === 'card')
     	{
-		    inputLength = barcode.length;
-		window.alert(barcode);
-		    var lastNameStartIndex = barcode.indexOf("^");
-			lastNameStartIndex= lastNameStartIndex+1;
+    		var power = barcode.indexOf('^');
+    		var secondPower = barcode.indexOf('^', power+1);
+    		var slash = barcode.indexOf('/');
+    		var semicolon = barcode.indexOf(';');
+    		var equals = barcode.indexOf('=');
 
-		    var modifiedEnding= inputLength-lastNameStartIndex;
-			var headTrimmed = barcode.substring(lastNameStartIndex,inputLength-lastNameStartIndex);
+    		var lastName = barcode.substring(power+1, slash);
+    		var firstName = barcode.substring(slash+1, secondPower);
+    		var cardNumber = barcode.substring(semicolon+1, equals);
+    		var cardNumberDisplay = 'XXXX-XXXX-XXXX-' + cardNumber.substring(12, 16);
 
-			var firstNameStartIndex = headTrimmed.indexOf("/");
-			var firstNameStartIndexPlus1 = firstNameStartIndex+1; 
-			var firstNameEndIndex = headTrimmed.indexOf("^");
-			var cardNumberStartIndex = headTrimmed.indexOf(";");
-			cardNumberStartIndex= cardNumberStartIndex+1;
-			var cardNumberEndingIndex = cardNumberStartIndex+16;
-			var lastName = headTrimmed.substring(0, firstNameStartIndex);
-		window.alert(lastName);
-			var firstName = headTrimmed.substring(firstNameStartIndexPlus1,firstNameEndIndex);
-		window.alert(firstName);  	
-			var cardNumber = headTrimmed.substring(cardNumberStartIndex,cardNumberEndingIndex);
-		window.alert(cardNumber);
-		    var cardNumberLF= "XXXX-XXXX-XXXX-XXXX-"+cardNumber.substring(12,16);
-		    cardNumber = 0;
-		window.alert(cardNumberLF);
 
-		$scope.firstName = firstName;
-		$scope.lastName = lastName;
-		$scope.cardNumber = cardNumberLF;
-		}
+    		window.alert('Barcode: '+barcode);
+    		window.alert('Last name: '+lastName);
+    		window.alert('First name: '+firstName);
+    		window.alert('Card number: '+cardNumber);
+
+				// $scope.cardSwiped = true;
+				// $scope.firstName = firstName;
+				// $scope.lastName = lastName;
+				// $scope.cardNumber = cardNumberLF;
+			}
     	
     }
 
