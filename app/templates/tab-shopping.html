@@ -39,7 +39,7 @@
 
         <ion-item>
           <button class="button button-positive" ng-click="startPaying()">Checkout</button>
-          <button class="button button-calm" ng-click="reset()">Reset</button>
+          <button class="button button-energized" ng-click="reset()">Reset</button>
         </ion-item>
       </div>
       
@@ -86,6 +86,8 @@
                 {{cardData.lastName()}}
                 <hr>
                 {{cardData.cardNumber()}}
+                <hr>
+                <button class="button button-energized" ng-click="reset()">Reset</button>
               </span>
               <button class="button button-block button-positive" ng-click="startPaying()">Back</button>
             </div>
@@ -96,6 +98,7 @@
       <div ng-switch-when="cash">
         <ion-item>
           <p class="payment">Please proceed to the cash checkout station</p>
+          <button class="button button-energized" ng-click="reset()">Reset</button>
           <div class="row">
             <div class="col col-33">
               <button class="button button-block button-positive" ng-click="startPaying()">Back</button>
