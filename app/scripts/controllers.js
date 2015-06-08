@@ -2,8 +2,9 @@
 
 angular.module('starter.controllers', [])
 
-.controller('ShoppingCtrl', function($scope, CartItems, IdVerification, Bluetooth) {
+.controller('ShoppingCtrl', function($scope, CartItems, CardInfo, IdVerification, Bluetooth) {
 	$scope.state = 'scanning';
+	$scope.cardData = { cardSwiped: false, firstName: CardInfo.getFirstName, lastName: CardInfo.getLastName, cardNumber: CardInfo.getCardNumber };
 
 	$scope.items = CartItems.all();
 	$scope.subtotal = CartItems.getSubtotal;
@@ -35,19 +36,37 @@ angular.module('starter.controllers', [])
 		$scope.state = 'paying';
 	};
 
+	$scope.creditCardPayment =  function() {
+		$scope.state = 'card';
+	};
+
+	$scope.cashPayment =  function() {
+		$scope.state = 'cash';
+	};
+
 	$scope.verifyId = function() {
 		if (!IdVerification.verifyId($scope.code.input)) {
 			$scope.code.input = null;
 			window.alert('Incorrect code');
 		}
 	};
-
+	
 	$scope.$on('$ionicView.loaded', function() {
     var readBarcode = function(barcode) {
-    	CartItems.add(barcode);
+	    if (barcode.length<60) {
+	    	CartItems.add(barcode);
+	    }
+	    else {
+	    	if($scope.state === 'card') {
+	    		CardInfo.processInfo(barcode);
+					$scope.cardData.cardSwiped = CardInfo.getSwipeCheck();
+				}
+	    }
     };
+    
     Bluetooth.setReadCallback(readBarcode);
 	});
+
 
 	$scope.$on('$ionicView.enter', function() {
     Bluetooth.startConnectPoll();

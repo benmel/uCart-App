@@ -114,6 +114,47 @@ angular.module('starter.services', [])
   };
 })
 
+.factory('CardInfo', function() {
+  var firstNameOutput ='';
+  var lastNameOutput = '';
+  var cardNumberOutput = '';
+  var swipeCheck = false;
+
+return {
+    processInfo: function (input) {
+      var power = input.indexOf('^');
+      var secondPower = input.indexOf('^', power+1);
+      var slash = input.indexOf('/');
+      var semicolon = input.indexOf(';');
+      var equals = input.indexOf('=');
+
+      var lastName = input.substring(power+1, slash);
+      var firstName = input.substring(slash+1, secondPower);
+      var cardNumber = input.substring(semicolon+1, equals);
+      var cardNumberDisplay = 'XXXX-XXXX-XXXX-' + cardNumber.substring(12, 16);
+
+      if ( firstName && lastName && cardNumber) {
+        firstNameOutput = firstName;
+        lastNameOutput = lastName;
+        cardNumberOutput = cardNumberDisplay;
+        swipeCheck = true;
+      } 
+    },
+    getFirstName: function() {
+      return firstNameOutput;
+    },
+    getLastName: function() {
+      return lastNameOutput;
+    },
+    getCardNumber: function(){
+      return cardNumberOutput;
+    },
+    getSwipeCheck: function(){
+      return swipeCheck;
+    }
+  };
+})
+
 .factory('GroceryItems', function() {
   var items = [];
   var id = 0;
@@ -159,6 +200,8 @@ angular.module('starter.services', [])
     }
   };
 })
+
+
 
 .factory('Bluetooth', function($q, $interval) {
   var poll;

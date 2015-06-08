@@ -3,6 +3,7 @@
     <ion-list>
       
       <div ng-switch on="state">
+        
         <div ng-switch-when="scanning">
           <ion-item>
             <div class="row">
@@ -40,13 +41,14 @@
         </ion-item>
       </div>
       
+
       <div ng-switch-when="paying">
         <ion-item>
           <div class="row">
             <div class="col col-33">
               <button class="button button-block button-positive" ng-click="startScanning()">Back</button>
-              <button class="button button-block button-positive" ng-show="showPaymentOptions()">Pay with card</button>
-              <button class="button button-block button-positive" ng-show="showPaymentOptions()">Pay with cash</button>
+              <button class="button button-block button-positive" ng-click="creditCardPayment()">Pay with card</button>
+              <button class="button button-block button-positive" ng-click="cashPayment()">Pay with cash</button>
             </div>
           </div>
         </ion-item>
@@ -67,6 +69,37 @@
             </button>
           </div>
         </div>
+      </div> 
+
+      <div ng-switch-when="card">
+        <ion-item>
+          <p class="payment" ng-if="!cardData.cardSwiped">Please swipe your card</p>
+          <div class="row">
+            <div class="col col-33">
+              <span ng-if="cardData.cardSwiped" class="animate-if">
+                Thank you for your payment.
+                <hr>
+                {{cardData.firstName()}} 
+                <hr>
+                {{cardData.lastName()}}
+                <hr>
+                {{cardData.cardNumber()}}
+              </span>
+              <button class="button button-block button-positive" ng-click="startPaying()">Back</button>
+            </div>
+          </div>
+        </ion-item>
+      </div> 
+
+      <div ng-switch-when="cash">
+        <ion-item>
+          <p class="payment">Please proceed to the cash checkout station</p>
+          <div class="row">
+            <div class="col col-33">
+              <button class="button button-block button-positive" ng-click="startPaying()">Back</button>
+            </div>
+          </div>
+        </ion-item>
       </div> 
     </div>
 
