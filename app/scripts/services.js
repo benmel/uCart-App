@@ -114,6 +114,57 @@ angular.module('starter.services', [])
   };
 })
 
+.factory('CardInfo', function() {
+  var firstNameOutput ='';
+  var lastNameOutput = '';
+  var cardNumberOutput = '';
+  var lastFourDigitsOutput = '';
+  var swipeCheck = false;
+  var reset = 'false';
+
+return {
+    processInfo: function (input) {
+
+      var power = input.indexOf('^');
+      var secondPower = input.indexOf('^', power+1);
+      var slash = input.indexOf('/');
+      var semicolon = input.indexOf(';');
+      var equals = input.indexOf('=');
+
+      var lastName = input.substring(power+1, slash);
+      var firstName = input.substring(slash+1, secondPower);
+      var cardNumber = input.substring(semicolon+1, equals);
+      var cardNumberDisplay = 'XXXX-XXXX-XXXX-' + cardNumber.substring(12, 16);
+
+
+      window.alert('Barcode: '+input);
+      window.alert('Last name: '+lastName);
+      window.alert('First name: '+firstName);
+      window.alert('Card number: '+cardNumber);
+
+      if ( firstName !=='' && lastName !=='' && cardNumberDisplay !== '') 
+      {
+      firstNameOutput = firstName;
+      lastNameOutput = lastName;
+      cardNumberOutput = cardNumberDisplay;
+      swipeCheck = true;
+      } 
+    },
+    returnFirstName: function() {
+      return firstNameOutput;
+    },
+    returnLastName: function() {
+      return lastNameOutput;
+    },
+    returnCardNumber: function(){
+      return lastFourDigitsOutput;
+    },
+    returnSwipeCheck: function(){
+      return swipeCheck;
+    }
+  };
+})
+
 .factory('GroceryItems', function() {
   var items = [];
   var id = 0;
@@ -159,6 +210,8 @@ angular.module('starter.services', [])
     }
   };
 })
+
+
 
 .factory('Bluetooth', function($q, $interval) {
   var poll;

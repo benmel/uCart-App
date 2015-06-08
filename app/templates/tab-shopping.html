@@ -78,9 +78,18 @@
               
               <h> please swipe your card</h>
               
+              <span ng-if="cardSwiped" class="animate-if">
+                Thank you for your payment.
+                <hr>
+                {{firstName}} 
+                <hr>
+                {{lastName}}
+                <hr>
+                {{cardNumber}}
+              </span>
 
 
-              <button class="button button-block button-positive" ng-click="startScanning()">Back</button>
+              <button class="button button-block button-positive" ng-click="startPaying()">Back</button>
 
             </div>
           </div>
@@ -92,9 +101,9 @@
           <div class="row">
             <div class="col col-33">
               
-              <p> please pay for your items at the cash checkout station</p>
+              <h> please pay for your items at the cash checkout station</h>
               
-              <button class="button button-block button-positive" ng-click="startScanning()">Back</button>
+              <button class="button button-block button-positive" ng-click="startPaying()">Back</button>
 
             </div>
           </div>
