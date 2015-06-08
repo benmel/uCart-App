@@ -2,7 +2,10 @@
 
 angular.module('starter.controllers', [])
 
-.controller('ShoppingCtrl', function($scope, CartItems, CardInfo, IdVerification, GroceryItems, Bluetooth) {
+
+
+
+.controller('ShoppingCtrl', function($scope, $ionicScrollDelegate, CartItems, CardInfo, IdVerification, GroceryItems, Bluetooth) {
 	$scope.state = 'scanning';
 	$scope.cardData = { cardSwiped: false, firstName: CardInfo.getFirstName, lastName: CardInfo.getLastName, cardNumber: CardInfo.getCardNumber };
 
@@ -17,6 +20,11 @@ angular.module('starter.controllers', [])
 
 	$scope.barcode = { input: null };
 	
+	$scope.scrollTop = function() {
+		$ionicScrollDelegate.scrollTop();
+	};
+
+
 	$scope.add = function() {
 		if ($scope.barcode.input) {
 			CartItems.add($scope.barcode.input);
@@ -41,7 +49,7 @@ angular.module('starter.controllers', [])
 	
 	$scope.startScanning = function() {
 		$scope.state = 'scanning';
-		window.scrollTo(0, 0);
+		$scope.scrollTop();
 	};
 
 	$scope.startPaying = function() {
@@ -51,18 +59,20 @@ angular.module('starter.controllers', [])
       	IdVerification.setIdVerificationNeeded(true);
       }
     });
+		
 		$scope.state = 'paying';
-		window.scrollTo(0, 0);
+		$scope.scrollTop();
+		
 	};
 
 	$scope.creditCardPayment =  function() {
 		$scope.state = 'card';
-		window.scrollTo(0, 0);
+		$scope.scrollTop();
 	};
 
 	$scope.cashPayment =  function() {
 		$scope.state = 'cash';
-		window.scrollTo(0, 0);
+		$scope.scrollTop();
 	};
 
 	$scope.verifyId = function() {
