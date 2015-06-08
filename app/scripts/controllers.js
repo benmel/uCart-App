@@ -2,7 +2,7 @@
 
 angular.module('starter.controllers', [])
 
-.controller('ShoppingCtrl', function($scope, CartItems, CardInfo, IdVerification, Bluetooth) {
+.controller('ShoppingCtrl', function($scope, CartItems, CardInfo, IdVerification,GroceryItems, Bluetooth) {
 	$scope.state = 'scanning';
 	$scope.cardData = { cardSwiped: false, firstName: CardInfo.getFirstName, lastName: CardInfo.getLastName, cardNumber: CardInfo.getCardNumber };
 
@@ -28,20 +28,34 @@ angular.module('starter.controllers', [])
 		CartItems.remove(item);
 	};
 
+	$scope.reset = function(){	
+		CartItems.reset();
+		CardInfo.reset();
+		IdVerification.reset();
+		GroceryItems.reset();
+		$scope.state = 'scanning';
+		$scope.cardData = { cardSwiped: false, firstName: CardInfo.getFirstName, lastName: CardInfo.getLastName, cardNumber: CardInfo.getCardNumber };
+
+
+	};
 	$scope.startScanning = function() {
 		$scope.state = 'scanning';
+		window.scrollTo(0, 0);
 	};
 
 	$scope.startPaying = function() {
 		$scope.state = 'paying';
+		window.scrollTo(0, 0);
 	};
 
 	$scope.creditCardPayment =  function() {
 		$scope.state = 'card';
+		window.scrollTo(0, 0);
 	};
 
 	$scope.cashPayment =  function() {
 		$scope.state = 'cash';
+		window.scrollTo(0, 0);
 	};
 
 	$scope.verifyId = function() {
