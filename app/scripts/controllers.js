@@ -2,9 +2,6 @@
 
 angular.module('starter.controllers', [])
 
-
-
-
 .controller('ShoppingCtrl', function($scope, $ionicScrollDelegate, CartItems, CardInfo, IdVerification, GroceryItems, Bluetooth) {
 	$scope.state = 'scanning';
 	$scope.cardData = { cardSwiped: false, firstName: CardInfo.getFirstName, lastName: CardInfo.getLastName, cardNumber: CardInfo.getCardNumber };
@@ -21,9 +18,8 @@ angular.module('starter.controllers', [])
 	$scope.barcode = { input: null };
 	
 	$scope.scrollTop = function() {
-		$ionicScrollDelegate.scrollTop();
+		$ionicScrollDelegate.scrollTop(true);
 	};
-
 
 	$scope.add = function() {
 		if ($scope.barcode.input) {
@@ -45,6 +41,7 @@ angular.module('starter.controllers', [])
 		$scope.cardData.cardSwiped = false;
 		$scope.barcode.input = null;
 		$scope.code.input = null;
+		$scope.scrollTop();
 	};
 	
 	$scope.startScanning = function() {
@@ -62,7 +59,6 @@ angular.module('starter.controllers', [])
 		
 		$scope.state = 'paying';
 		$scope.scrollTop();
-		
 	};
 
 	$scope.creditCardPayment =  function() {
@@ -114,7 +110,7 @@ angular.module('starter.controllers', [])
 	});
 })
 
-.controller('ListCtrl', function($scope, $http, CartItems, GroceryItems) {
+.controller('ListCtrl', function($scope, $http, $ionicScrollDelegate, CartItems, GroceryItems) {
   $scope.items = GroceryItems.all();
   
   $http.get('https://ucart-server.herokuapp.com/api/v1/products')
@@ -123,6 +119,10 @@ angular.module('starter.controllers', [])
   });
 
   $scope.cartItems = CartItems.all();
+
+  $scope.scrollTop = function() {
+		$ionicScrollDelegate.scrollTop();
+	};
   
   $scope.add = function(name) {
     GroceryItems.add(name);
@@ -135,6 +135,10 @@ angular.module('starter.controllers', [])
   $scope.clearQuery = function() {
     $scope.input.query = '';
   };
+
+  $scope.$watch('input.query', function() {
+  	$scope.scrollTop();
+  });
 })
 
 .controller('CouponsCtrl', function($scope, $http, GroceryItems) {
