@@ -118,13 +118,10 @@ angular.module('starter.services', [])
   var firstNameOutput ='';
   var lastNameOutput = '';
   var cardNumberOutput = '';
-  var lastFourDigitsOutput = '';
   var swipeCheck = false;
-  var reset = 'false';
 
 return {
     processInfo: function (input) {
-
       var power = input.indexOf('^');
       var secondPower = input.indexOf('^', power+1);
       var slash = input.indexOf('/');
@@ -136,30 +133,23 @@ return {
       var cardNumber = input.substring(semicolon+1, equals);
       var cardNumberDisplay = 'XXXX-XXXX-XXXX-' + cardNumber.substring(12, 16);
 
-
-      window.alert('Barcode: '+input);
-      window.alert('Last name: '+lastName);
-      window.alert('First name: '+firstName);
-      window.alert('Card number: '+cardNumber);
-
-      if ( firstName !=='' && lastName !=='' && cardNumberDisplay !== '') 
-      {
-      firstNameOutput = firstName;
-      lastNameOutput = lastName;
-      cardNumberOutput = cardNumberDisplay;
-      swipeCheck = true;
+      if ( firstName && lastName && cardNumber) {
+        firstNameOutput = firstName;
+        lastNameOutput = lastName;
+        cardNumberOutput = cardNumberDisplay;
+        swipeCheck = true;
       } 
     },
-    returnFirstName: function() {
+    getFirstName: function() {
       return firstNameOutput;
     },
-    returnLastName: function() {
+    getLastName: function() {
       return lastNameOutput;
     },
-    returnCardNumber: function(){
-      return lastFourDigitsOutput;
+    getCardNumber: function(){
+      return cardNumberOutput;
     },
-    returnSwipeCheck: function(){
+    getSwipeCheck: function(){
       return swipeCheck;
     }
   };

@@ -73,24 +73,19 @@
 
       <div ng-switch-when="card">
         <ion-item>
+          <p class="payment" ng-if="!cardData.cardSwiped">Please swipe your card</p>
           <div class="row">
             <div class="col col-33">
-              
-              <h> please swipe your card</h>
-              
-              <span ng-if="cardSwiped" class="animate-if">
+              <span ng-if="cardData.cardSwiped" class="animate-if">
                 Thank you for your payment.
                 <hr>
-                {{firstName}} 
+                {{cardData.firstName()}} 
                 <hr>
-                {{lastName}}
+                {{cardData.lastName()}}
                 <hr>
-                {{cardNumber}}
+                {{cardData.cardNumber()}}
               </span>
-
-
               <button class="button button-block button-positive" ng-click="startPaying()">Back</button>
-
             </div>
           </div>
         </ion-item>
@@ -98,23 +93,15 @@
 
       <div ng-switch-when="cash">
         <ion-item>
+          <p class="payment">Please proceed to the cash checkout station</p>
           <div class="row">
             <div class="col col-33">
-              
-              <h> please pay for your items at the cash checkout station</h>
-              
               <button class="button button-block button-positive" ng-click="startPaying()">Back</button>
-
             </div>
           </div>
         </ion-item>
       </div> 
-
-
-
     </div>
-
-
 
     <div class="item">
       Subtotal: {{ subtotal().toFixed(2) }}<br>

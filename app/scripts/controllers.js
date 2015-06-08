@@ -4,11 +4,7 @@ angular.module('starter.controllers', [])
 
 .controller('ShoppingCtrl', function($scope, CartItems, CardInfo, IdVerification, Bluetooth) {
 	$scope.state = 'scanning';
-
-	$scope.firstName = '';
-	$scope.lastName = '';
-	$scope.cardNumber = '';
-
+	$scope.cardData = { cardSwiped: false, firstName: CardInfo.getFirstName, lastName: CardInfo.getLastName, cardNumber: CardInfo.getCardNumber };
 
 	$scope.items = CartItems.all();
 	$scope.subtotal = CartItems.getSubtotal;
@@ -57,53 +53,17 @@ angular.module('starter.controllers', [])
 	
 	$scope.$on('$ionicView.loaded', function() {
     var readBarcode = function(barcode) {
-
-    var inputLength = barcode.length;
-
-    if (inputLength<60)
-    {
-    	CartItems.add(barcode);
-    }
-    else
-    {
-    	if($scope.state === 'card')
-    	{
-    		CardInfo.processInfo(barcode);
-    		$scope.cardSwiped = CardInfo.returnSwipeCheck();
-			if ($scope.cardSwiped == 'true')
-			{
-				$scope.firstName = CardInfo.returnFirstName;
-				$scope.lastName = CardInfo.returnLastName;
-				$scope.cardNumber = CardInfo.returnCardNumber;
-			}
-			
-
-    		// var power = barcode.indexOf('^');
-    		// var secondPower = barcode.indexOf('^', power+1);
-    		// var slash = barcode.indexOf('/');
-    		// var semicolon = barcode.indexOf(';');
-    		// var equals = barcode.indexOf('=');
-
-    		// var lastName = barcode.substring(power+1, slash);
-    		// var firstName = barcode.substring(slash+1, secondPower);
-    		// var cardNumber = barcode.substring(semicolon+1, equals);
-    		// var cardNumberDisplay = 'XXXX-XXXX-XXXX-' + cardNumber.substring(12, 16);
-
-
-    		// window.alert('Barcode: '+barcode);
-    		// window.alert('Last name: '+lastName);
-    		// window.alert('First name: '+firstName);
-    		// window.alert('Card number: '+cardNumber);
-
-				// $scope.cardSwiped = true;
-				// $scope.firstName = firstName;
-				// $scope.lastName = lastName;
-				// $scope.cardNumber = cardNumberLF;
-		}
-    	
-    }
-
+	    if (barcode.length<60) {
+	    	CartItems.add(barcode);
+	    }
+	    else {
+	    	if($scope.state === 'card') {
+	    		CardInfo.processInfo(barcode);
+					$scope.cardData.cardSwiped = CardInfo.getSwipeCheck();
+				}
+	    }
     };
+    
     Bluetooth.setReadCallback(readBarcode);
 	});
 
