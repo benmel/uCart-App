@@ -7,19 +7,22 @@
   </ion-header-bar>
 
   <ion-content>
-    <ion-list>
-      <ion-item ng-repeat="coup in coupons|filter:query|orderBy:['category','name']"style="float:left"> 
-        <div class="row">    
-          <div class="col">
-            <h3>{{coup.category}}</h3>
-            <img ng-src={{coup.coupon.image}} height="200" width="200">
-            <p>{{coup.name}}</p>
-            <p>Original Price: {{coup.price}}</p>
-            <p>Discounted Price: {{coup.coupon.price}}</p>
-            <button class ="button" ng-click="addToGrocery(coup)">Add to List</button>    
+    <div ng-repeat="coupon in coupons|filter:query|orderBy:['category','name']">
+      <div ng-if="$index % 3 === 0" class="row" ng-init="rowIndex=$index">
+        <div ng-repeat="i in [0, 1, 2]" class="col-33 coupon" ng-init="colIndex=$index">
+          <div ng-if="coupons[rowIndex+colIndex]" class="couponContainer" ng-init="coupon=coupons[rowIndex+colIndex]">
+            <h5>{{coupon.category}}</h5>
+            <div class="imgContainer">
+              <img ng-src="{{coupon.coupon.image}}" class="coupon">
+            </div>
+            <p class="coupon">{{coupon.name}}</p>
+            <p class="coupon">Original Price: ${{coupon.price}}</p>
+            <p class="coupon">Discounted Price: <span class="color">${{coupon.coupon.price}}</span></p>
+            <button class="button coupon" ng-click="addToGrocery(coupon)">Add to List</button>
           </div>
-        </div>
-      </ion-item>
-    </ion list>
+        </div>  
+      </div>
+      </div>
+    </div>
   </ion-content>
 </ion-view>
