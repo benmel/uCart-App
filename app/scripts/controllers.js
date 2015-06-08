@@ -89,8 +89,27 @@ angular.module('starter.controllers', [])
 
 .controller('CouponsCtrl', function($scope, $http, GroceryItems) {
 	$http.get('https://ucart-server.herokuapp.com/api/v1/coupons').success(function(data){
-		$scope.coupons=data;
+		$scope.chunkedData = chunk(data, 3);
 	});
+
+	function chunk(arr, size) {
+	  arr.sort(function(a, b){
+	  	var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase();
+	  	if (nameA < nameB) {
+	  		return -1;
+	  	} 
+	 		if (nameA > nameB) {
+	  		return 1;
+	  	}
+	 		return 0;
+	  });
+
+	  var newArr = [];
+	  for (var i=0; i<arr.length; i+=size) {
+	    newArr.push(arr.slice(i, i+size));
+	  }
+	  return newArr;
+	}
 
 	$scope.addToGrocery=function(item){
 		GroceryItems.add(item.name);
