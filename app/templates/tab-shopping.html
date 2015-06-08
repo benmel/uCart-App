@@ -79,7 +79,7 @@
             <div class="col col-33">
               <span ng-if="cardData.cardSwiped" class="animate-if">
                 Thank you for your payment.
-                <hr>
+                <hr ng-if="cardData.firstName()">
                 {{cardData.firstName()}} 
                 <hr>
                 {{cardData.lastName()}}

@@ -153,7 +153,7 @@ return {
       var cardNumber = input.substring(semicolon+1, equals);
       var cardNumberDisplay = 'XXXX-XXXX-XXXX-' + cardNumber.substring(12, 16);
 
-      if (firstName && lastName && cardNumber) {
+      if (lastName && cardNumber) {
         firstNameOutput = firstName;
         lastNameOutput = lastName;
         cardNumberOutput = cardNumberDisplay;
