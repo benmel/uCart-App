@@ -11,12 +11,21 @@ angular.module('starter.services', [])
   var total = 0;
 
   function addToTotal(item) {
-    subtotal += item.price * item.quantity;
+    if (item.coupon && item.coupon.price) {
+      subtotal += item.coupon.price * item.quantity;
+    }
+    else {
+      subtotal += item.price * item.quantity;
+    }
     updateTotal();
   }
 
   function removeFromTotal(item) {
-    subtotal -= item.price * item.quantity;
+    if (item.coupon && item.coupon.price) {
+      subtotal -= item.coupon.price * item.quantity;
+    } else {
+      subtotal -= item.price * item.quantity;
+    }
     updateTotal();
   }
 
@@ -71,6 +80,13 @@ angular.module('starter.services', [])
     },
     getTotal: function() {
       return total;
+    },
+    reset:function() {
+      items.length = 0;
+      id = 0;
+      subtotal = 0;
+      tax = 0;
+      total = 0;
     }
   };
 })
@@ -110,6 +126,10 @@ angular.module('starter.services', [])
       } else {
         return false;
       }
+    },
+    reset:function() {
+      idVerified = false;
+      idVerificationNeeded = false;
     }
   };
 })
@@ -133,12 +153,12 @@ return {
       var cardNumber = input.substring(semicolon+1, equals);
       var cardNumberDisplay = 'XXXX-XXXX-XXXX-' + cardNumber.substring(12, 16);
 
-      if ( firstName && lastName && cardNumber) {
+      if (firstName && lastName && cardNumber) {
         firstNameOutput = firstName;
         lastNameOutput = lastName;
         cardNumberOutput = cardNumberDisplay;
         swipeCheck = true;
-      } 
+      }
     },
     getFirstName: function() {
       return firstNameOutput;
@@ -151,6 +171,12 @@ return {
     },
     getSwipeCheck: function(){
       return swipeCheck;
+    },
+    reset:function() {
+      firstNameOutput ='';
+      lastNameOutput = '';
+      cardNumberOutput = '';
+      swipeCheck = false;
     }
   };
 })
@@ -197,6 +223,11 @@ return {
           items[i].checked = false;
         }
       }
+    },
+    reset:function() {
+      items.length = 0;
+      id = 0;
+      checkDuplicate = false;
     }
   };
 })

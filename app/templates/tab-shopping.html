@@ -3,7 +3,6 @@
     <ion-list>
       
       <div ng-switch on="state">
-        
         <div ng-switch-when="scanning">
           <ion-item>
             <div class="row">
@@ -17,7 +16,8 @@
           <ion-item ng-repeat="item in items">
             <div class="row">
               <div class="col col-33">{{ item.name }}</div>
-              <div class="col col-25">{{ item.price }}</div>
+              <div class="col col-25 color" ng-if="item.coupon.price">{{ item.coupon.price }}</div>
+              <div class="col col-25" ng-if="!item.coupon.price">{{ item.price }}</div>
               <div class="col col-25">{{ item.quantity }}</div>
               <div class="col">
                 <button class="button button-assertive" ng-click="remove(item)">Delete</button>
@@ -38,6 +38,7 @@
 
         <ion-item>
           <button class="button button-positive" ng-click="startPaying()">Checkout</button>
+          <button class="button button-assertive" ng-click="reset()">Reset</button>
         </ion-item>
       </div>
       
@@ -46,9 +47,9 @@
         <ion-item>
           <div class="row">
             <div class="col col-33">
+              <button class="button button-block button-positive" ng-show="!showVerificationNeeded()" ng-click="creditCardPayment()">Pay with card</button>
+              <button class="button button-block button-positive" ng-show="!showVerificationNeeded()" ng-click="cashPayment()">Pay with cash</button>
               <button class="button button-block button-positive" ng-click="startScanning()">Back</button>
-              <button class="button button-block button-positive" ng-click="creditCardPayment()">Pay with card</button>
-              <button class="button button-block button-positive" ng-click="cashPayment()">Pay with cash</button>
             </div>
           </div>
         </ion-item>
@@ -84,6 +85,8 @@
                 {{cardData.lastName()}}
                 <hr>
                 {{cardData.cardNumber()}}
+                <hr>
+                <button class="button button-block button-assertive" ng-click="reset()">Reset</button>
               </span>
               <button class="button button-block button-positive" ng-click="startPaying()">Back</button>
             </div>
@@ -96,6 +99,7 @@
           <p class="payment">Please proceed to the cash checkout station</p>
           <div class="row">
             <div class="col col-33">
+              <button class="button button-block button-assertive" ng-click="reset()">Restart</button>
               <button class="button button-block button-positive" ng-click="startPaying()">Back</button>
             </div>
           </div>
